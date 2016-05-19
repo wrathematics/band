@@ -40,17 +40,17 @@ SEXP R_banded(SEXP x, SEXP kl_, SEXP ku_)
   const int ku = INT(ku_);
   const int m = nrows(x);
   const int n = ncols(x);
-  const int m_out = banded_nr(kl, ku, false);
+  const int m_out = tobanded_numrows(kl, ku, false);
   
   switch (TYPEOF(x))
   {
     case INTSXP:
       PROTECT(ret = allocVector(INTSXP, m_out*n));
-      banded_int(m, n, kl, ku, INTEGER(x), INTEGER(ret));
+      tobanded_int(m, n, kl, ku, INTEGER(x), INTEGER(ret));
       break;
     case REALSXP:
       PROTECT(ret = allocVector(REALSXP, m_out*n));
-      banded_double(m, n, kl, ku, REAL(x), REAL(ret));
+      tobanded_double(m, n, kl, ku, REAL(x), REAL(ret));
       break;
     default:
       error("bad type");

@@ -24,30 +24,63 @@
     SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#ifndef __BAND_LIB_H__
-#define __BAND_LIB_H__
 
-
-#ifdef __cplusplus
-extern "C" {
-#else
-#include <stdbool.h>
-#endif
-
-// asbanded
-int tobanded_int(const int m, const int n, const int kl, const int ku, const int *__restrict in, int *__restrict out);
-int tobanded_double(const int m, const int n, const int kl, const int ku, const double *__restrict in, double *__restrict out);
-
-int tobanded_numrows(const int kl, const int ku, const bool symmetric);
-
-// asmatrix
-int tomatrix_int(const int m, const int n, const int kl, const int ku, int *__restrict gen, const int *__restrict band);
-int tomatrix_double(const int m, const int n, const int kl, const int ku, double *__restrict gen, const double *__restrict band);
-
-
-#ifdef __cplusplus
+// Storage reference: http://www.netlib.org/lapack/lug/node124.html
+template <typename T>
+static inline int banded_diag(const int m, const int n, const T *__restrict in, T *__restrict out)
+{
+  int ind_in;
+  int ind_out = 0;
+  
+  for (ind_in=0; ind_in<m*n; ind_in+=m+1)
+  {
+    out[ind_out] = in[ind_in];
+    ind_out++;
+  }
+  
+  return 0;
 }
-#endif
 
+template <typename T>
+static inline int banded_gen(const int m, const int n, const int kl, const int ku, const T *__restrict in, T *__restrict out)
+{
+  int i, j;
+  int mj;
+  int ind = 0;
+  
 
-#endif
+  
+  return 0;
+}
+
+template <typename T>
+int tobanded(const int m, const int n, const int kl, const int ku, const T *in, T *out)
+{
+  if (kl == 0 && ku == 0)
+    return banded_diag(m, n, in, out);
+  else
+    return banded_gen(m, n, kl, ku, in, out);
+}
+
+extern "C" int tobanded_int(const int m, const int n, const int kl, const int ku, const int *__restrict in, int *__restrict out)
+{
+  return tobanded(m, n, kl, ku, in, out);
+}
+
+extern "C" int tobanded_double(const int m, const int n, const int kl, const int ku, const double *__restrict in, double *__restrict out)
+{
+  return tobanded(m, n, kl, ku, in, out);
+}
+
+// ncols is always the same as the input
+extern "C" int tobanded_numrows(const int kl, const int ku, const bool symmetric)
+{
+  int nrows;
+  
+  if (symmetric)
+    nrows = kl + 1;
+  else
+    nrows = kl + ku + 1;
+  
+  return nrows;
+}
