@@ -25,7 +25,7 @@
 */
 
 
-#include "banded.h"
+#include "band.h"
 
 #include <R.h>
 #include <Rinternals.h>
