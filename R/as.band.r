@@ -1,7 +1,7 @@
 ## TODO symmetric
 
 #' @export
-banded <- function(x, kl, ku)
+as.band <- function(x, kl, ku)
 {
   if (!is.numeric(x)) #TODO allow logical?
     stop("argument 'x' must be numeric")
@@ -23,7 +23,7 @@ banded <- function(x, kl, ku)
   ku <- as.integer(ku)
   kl <- as.integer(kl)
   
-  out <- .Call("R_banded", x, kl, ku)
+  out <- .Call(R_tobanded, x, kl, ku)
   ret <- new("GenBandMat", Data=out, dim=dim, kl=kl, ku=ku)
   
   ret

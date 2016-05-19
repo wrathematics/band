@@ -6,9 +6,13 @@ x_double <- x_int
 storage.mode(x_double) <- "double"
 
 truth <- diag(x_int)
-test <- banded(x_int, 0, 0)@Data
+test <- as.band(x_int, 0, 0)@Data
 stopifnot(all.equal(truth, test))
 
 truth <- as.double(truth)
-test <- banded(x_double, 0, 0)@Data
+test <- as.band(x_double, 0, 0)@Data
 stopifnot(all.equal(truth, test))
+
+
+
+### 

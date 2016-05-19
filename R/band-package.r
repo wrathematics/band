@@ -5,7 +5,7 @@
 #' 
 #' @import methods
 #' 
-#' @useDynLib band
+#' @useDynLib band, R_tobanded, R_tomatrix
 #' 
 #' @docType package
 #' @name band-package

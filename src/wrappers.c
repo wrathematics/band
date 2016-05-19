@@ -33,7 +33,7 @@
 #define INT(x) INTEGER(x)[0]
 
 
-SEXP R_banded(SEXP x, SEXP kl_, SEXP ku_)
+SEXP R_tobanded(SEXP x, SEXP kl_, SEXP ku_)
 {
   SEXP ret;
   const int kl = INT(kl_);
@@ -50,7 +50,35 @@ SEXP R_banded(SEXP x, SEXP kl_, SEXP ku_)
       break;
     case REALSXP:
       PROTECT(ret = allocVector(REALSXP, m_out*n));
-      tobanded_double(m, n, kl, ku, REAL(x), REAL(ret));
+      tobanded_dbl(m, n, kl, ku, REAL(x), REAL(ret));
+      break;
+    default:
+      error("bad type");
+  }
+  
+  UNPROTECT(1);
+  return ret;
+}
+
+
+
+SEXP R_tomatrix(SEXP x, SEXP m_, SEXP n_, SEXP kl_, SEXP ku_)
+{
+  SEXP ret;
+  const int m = INT(m_);
+  const int n = INT(n_);
+  const int kl = INT(kl_);
+  const int ku = INT(ku_);
+  
+  switch (TYPEOF(x))
+  {
+    case INTSXP:
+      PROTECT(ret = allocVector(INTSXP, m*n));
+      tomatrix_int(m, n, kl, ku, INTEGER(x), INTEGER(ret));
+      break;
+    case REALSXP:
+      PROTECT(ret = allocVector(REALSXP, m*n));
+      tomatrix_dbl(m, n, kl, ku, REAL(x), REAL(ret));
       break;
     default:
       error("bad type");

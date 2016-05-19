@@ -36,13 +36,13 @@ extern "C" {
 
 // asbanded
 int tobanded_int(const int m, const int n, const int kl, const int ku, const int *__restrict in, int *__restrict out);
-int tobanded_double(const int m, const int n, const int kl, const int ku, const double *__restrict in, double *__restrict out);
+int tobanded_dbl(const int m, const int n, const int kl, const int ku, const double *__restrict in, double *__restrict out);
 
 int tobanded_numrows(const int kl, const int ku, const bool symmetric);
 
 // asmatrix
 int tomatrix_int(const int m, const int n, const int kl, const int ku, int *__restrict gen, const int *__restrict band);
-int tomatrix_double(const int m, const int n, const int kl, const int ku, double *__restrict gen, const double *__restrict band);
+int tomatrix_dbl(const int m, const int n, const int kl, const int ku, double *__restrict gen, const double *__restrict band);
 
 
 #ifdef __cplusplus

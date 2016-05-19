@@ -26,23 +26,26 @@
 
 
 // Storage reference: http://www.netlib.org/lapack/lug/node124.html
+
 template <typename T>
-static inline int banded_diag(const int m, const int n, const T *__restrict in, T *__restrict out)
+static inline int banded_diag(const int m, const int n, const T *__restrict gen, T *__restrict band)
 {
-  int ind_in;
-  int ind_out = 0;
+  int ind_gen;
+  int ind_band = 0;
   
-  for (ind_in=0; ind_in<m*n; ind_in+=m+1)
+  for (ind_gen=0; ind_gen<m*n; ind_gen+=m+1)
   {
-    out[ind_out] = in[ind_in];
-    ind_out++;
+    band[ind_band] = gen[ind_gen];
+    ind_band++;
   }
   
   return 0;
 }
 
+
+
 template <typename T>
-static inline int banded_gen(const int m, const int n, const int kl, const int ku, const T *__restrict in, T *__restrict out)
+static inline int banded_gen(const int m, const int n, const int kl, const int ku, const T *__restrict gen, T *__restrict band)
 {
   int i, j;
   int mj;
@@ -53,23 +56,29 @@ static inline int banded_gen(const int m, const int n, const int kl, const int k
   return 0;
 }
 
+
+
+// interface
 template <typename T>
-int tobanded(const int m, const int n, const int kl, const int ku, const T *in, T *out)
+int tobanded(const int m, const int n, const int kl, const int ku, const T *gen, T *band)
 {
   if (kl == 0 && ku == 0)
-    return banded_diag(m, n, in, out);
+    return banded_diag(m, n, gen, band);
   else
-    return banded_gen(m, n, kl, ku, in, out);
+    return banded_gen(m, n, kl, ku, gen, band);
 }
 
-extern "C" int tobanded_int(const int m, const int n, const int kl, const int ku, const int *__restrict in, int *__restrict out)
+
+
+// wrappers and utils
+extern "C" int tobanded_int(const int m, const int n, const int kl, const int ku, const int *__restrict gen, int *__restrict band)
 {
-  return tobanded(m, n, kl, ku, in, out);
+  return tobanded(m, n, kl, ku, gen, band);
 }
 
-extern "C" int tobanded_double(const int m, const int n, const int kl, const int ku, const double *__restrict in, double *__restrict out)
+extern "C" int tobanded_dbl(const int m, const int n, const int kl, const int ku, const double *__restrict gen, double *__restrict band)
 {
-  return tobanded(m, n, kl, ku, in, out);
+  return tobanded(m, n, kl, ku, gen, band);
 }
 
 // ncols is always the same as the input
