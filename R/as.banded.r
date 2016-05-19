@@ -1,7 +1,7 @@
 ## TODO symmetric
 
 #' @export
-as.band <- function(x, kl, ku)
+as.banded <- function(x, kl, ku)
 {
   if (!is.numeric(x)) #TODO allow logical?
     stop("argument 'x' must be numeric")

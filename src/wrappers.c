@@ -62,6 +62,7 @@ SEXP R_tobanded(SEXP x, SEXP kl_, SEXP ku_)
 
 
 
+#include <string.h>
 SEXP R_tomatrix(SEXP x, SEXP m_, SEXP n_, SEXP kl_, SEXP ku_)
 {
   SEXP ret;
@@ -74,11 +75,11 @@ SEXP R_tomatrix(SEXP x, SEXP m_, SEXP n_, SEXP kl_, SEXP ku_)
   {
     case INTSXP:
       PROTECT(ret = allocMatrix(INTSXP, m, n));
-      tomatrix_int(m, n, kl, ku, INTEGER(x), INTEGER(ret));
+      tomatrix_int(m, n, kl, ku, INTEGER(ret), INTEGER(x));
       break;
     case REALSXP:
       PROTECT(ret = allocMatrix(REALSXP, m, n));
-      tomatrix_dbl(m, n, kl, ku, REAL(x), REAL(ret));
+      tomatrix_dbl(m, n, kl, ku, REAL(ret), REAL(x));
       break;
     default:
       error("bad type");

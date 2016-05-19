@@ -70,9 +70,9 @@ template <typename T>
 int tomatrix(cint m, cint n, cint kl, cint ku, T *__restrict gen, const T *__restrict band)
 {
   if (kl == 0 && ku == 0)
-    return mat_diag<T>(m, n, gen, band);
+    return mat_diag(m, n, gen, band);
   else
-    return mat_gen<T>(m, n, kl, ku, gen, band);
+    return mat_gen(m, n, kl, ku, gen, band);
   
   return 0;
 }
@@ -82,10 +82,10 @@ int tomatrix(cint m, cint n, cint kl, cint ku, T *__restrict gen, const T *__res
 // wrappers
 extern "C" int tomatrix_int(cint m, cint n, cint kl, cint ku, int *__restrict gen, const int *__restrict band)
 {
-  return tomatrix(m, n, kl, ku, gen, band);
+  return tomatrix<int>(m, n, kl, ku, gen, band);
 }
 
 extern "C" int tomatrix_dbl(cint m, cint n, cint kl, cint ku, double *__restrict gen, const double *__restrict band)
 {
-  return tomatrix(m, n, kl, ku, gen, band);
+  return tomatrix<double>(m, n, kl, ku, gen, band);
 }
