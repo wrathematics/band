@@ -25,12 +25,9 @@
 */
 
 
+#include "band.h"
 #include <string.h>
 
-#include "band.h"
-
-
-#include <stdio.h>
 
 // Storage reference: http://www.netlib.org/lapack/lug/node124.html
 template <typename T>

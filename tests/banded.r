@@ -1,18 +1,27 @@
 library(band)
 
 ### Diagonal band
-x_int <- matrix(1:100, 10, 10)
-x_double <- x_int
-storage.mode(x_double) <- "double"
+x <- matrix(1:100, 10, 10)
 
-truth <- diag(x_int)
-test <- as.band(x_int, 0, 0)@Data
+truth <- diag(x)
+band <- as.banded(x, 0, 0)
+test <- band@Data
 stopifnot(all.equal(truth, test))
 
-truth <- as.double(truth)
-test <- as.band(x_double, 0, 0)@Data
+truth <- diag(diag(x))
+test <- as.matrix(band)
 stopifnot(all.equal(truth, test))
 
+# double
+storage.mode(x) <- "double"
 
+truth <- diag(x)
+band <- as.banded(x, 0, 0)
+test <- band@Data
+stopifnot(all.equal(truth, test))
+
+truth <- diag(diag(x))
+test <- as.matrix(band)
+stopifnot(all.equal(truth, test))
 
 ### 
