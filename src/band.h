@@ -34,15 +34,27 @@ extern "C" {
 #include <stdbool.h>
 #endif
 
-// asbanded
-int tobanded_int(const int m, const int n, const int kl, const int ku, const int *__restrict in, int *__restrict out);
-int tobanded_dbl(const int m, const int n, const int kl, const int ku, const double *__restrict in, double *__restrict out);
 
-int tobanded_numrows(const int kl, const int ku, const bool symmetric);
+typedef const bool cbool;
+
+typedef const int cint;
+typedef const double cdbl;
+
+typedef int *__restrict int_r;
+typedef const int *__restrict cint_r;
+
+typedef double *__restrict dbl_r;
+typedef const double *__restrict cdbl_r;
+
+// asbanded
+int tobanded_int(cint m, cint n, cint kl, cint ku, const int *__restrict gen, int *__restrict band);
+int tobanded_dbl(cint m, cint n, cint kl, cint ku, const double *__restrict gen, double *__restrict band);
+
+int tobanded_numrows(cint kl, cint ku, cbool symmetric);
 
 // asmatrix
-int tomatrix_int(const int m, const int n, const int kl, const int ku, int *__restrict gen, const int *__restrict band);
-int tomatrix_dbl(const int m, const int n, const int kl, const int ku, double *__restrict gen, const double *__restrict band);
+int tomatrix_int(cint m, cint n, cint kl, cint ku, int *__restrict gen, const int *__restrict band);
+int tomatrix_dbl(cint m, cint n, cint kl, cint ku, double *__restrict gen, const double *__restrict band);
 
 
 #ifdef __cplusplus

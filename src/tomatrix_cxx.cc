@@ -27,12 +27,18 @@
 
 #include <string.h>
 
+#include "band.h"
+
+
+#include <stdio.h>
+
 // Storage reference: http://www.netlib.org/lapack/lug/node124.html
 template <typename T>
-static inline int mat_diag(const int m, const int n, T *__restrict gen, const T *__restrict band)
+static inline int mat_diag(cint m, cint n, T *__restrict gen, const T *__restrict band)
 {
   int ind_gen;
   int ind_band = 0;
+  
   memset(gen, 0, m*n*sizeof(T));
   
   for (ind_gen=0; ind_gen<m*n; ind_gen+=m+1)
@@ -47,12 +53,12 @@ static inline int mat_diag(const int m, const int n, T *__restrict gen, const T 
 
 
 template <typename T>
-static inline int mat_gen(const int m, const int n, T *__restrict gen, const T *__restrict band)
+static inline int mat_gen(cint m, cint n, cint kl, cint ku, T *__restrict gen, const T *__restrict band)
 {
   int ind_in;
   int ind_out = 0;
   
-
+  // TODO
   
   return 0;
 }
@@ -61,12 +67,12 @@ static inline int mat_gen(const int m, const int n, T *__restrict gen, const T *
 
 // interface
 template <typename T>
-int tomatrix(const int m, const int n, const int kl, const int ku, T *__restrict gen, const T *__restrict band)
+int tomatrix(cint m, cint n, cint kl, cint ku, T *__restrict gen, const T *__restrict band)
 {
   if (kl == 0 && ku == 0)
-    return mat_diag(m, n, gen, band);
+    return mat_diag<T>(m, n, gen, band);
   else
-    return mat_gen(m, n, gen, band);
+    return mat_gen<T>(m, n, kl, ku, gen, band);
   
   return 0;
 }
@@ -74,12 +80,12 @@ int tomatrix(const int m, const int n, const int kl, const int ku, T *__restrict
 
 
 // wrappers
-extern "C" int tomatrix_int(const int m, const int n, const int kl, const int ku, int *__restrict gen, const int *__restrict band)
+extern "C" int tomatrix_int(cint m, cint n, cint kl, cint ku, int *__restrict gen, const int *__restrict band)
 {
   return tomatrix(m, n, kl, ku, gen, band);
 }
 
-extern "C" int tomatrix_dbl(const int m, const int n, const int kl, const int ku, double *__restrict gen, const double *__restrict band)
+extern "C" int tomatrix_dbl(cint m, cint n, cint kl, cint ku, double *__restrict gen, const double *__restrict band)
 {
   return tomatrix(m, n, kl, ku, gen, band);
 }

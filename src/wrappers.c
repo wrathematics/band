@@ -73,11 +73,11 @@ SEXP R_tomatrix(SEXP x, SEXP m_, SEXP n_, SEXP kl_, SEXP ku_)
   switch (TYPEOF(x))
   {
     case INTSXP:
-      PROTECT(ret = allocVector(INTSXP, m*n));
+      PROTECT(ret = allocMatrix(INTSXP, m, n));
       tomatrix_int(m, n, kl, ku, INTEGER(x), INTEGER(ret));
       break;
     case REALSXP:
-      PROTECT(ret = allocVector(REALSXP, m*n));
+      PROTECT(ret = allocMatrix(REALSXP, m, n));
       tomatrix_dbl(m, n, kl, ku, REAL(x), REAL(ret));
       break;
     default:

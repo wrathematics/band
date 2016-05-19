@@ -26,9 +26,10 @@
 
 
 // Storage reference: http://www.netlib.org/lapack/lug/node124.html
+#include "band.h"
 
 template <typename T>
-static inline int banded_diag(const int m, const int n, const T *__restrict gen, T *__restrict band)
+static inline int banded_diag(cint m, cint n, const T *__restrict gen, T *__restrict band)
 {
   int ind_gen;
   int ind_band = 0;
@@ -45,7 +46,7 @@ static inline int banded_diag(const int m, const int n, const T *__restrict gen,
 
 
 template <typename T>
-static inline int banded_gen(const int m, const int n, const int kl, const int ku, const T *__restrict gen, T *__restrict band)
+static inline int banded_gen(cint m, cint n, cint kl, cint ku, const T *__restrict gen, T *__restrict band)
 {
   int i, j;
   int mj;
@@ -60,7 +61,7 @@ static inline int banded_gen(const int m, const int n, const int kl, const int k
 
 // interface
 template <typename T>
-int tobanded(const int m, const int n, const int kl, const int ku, const T *gen, T *band)
+int tobanded(cint m, cint n, cint kl, cint ku, const T *gen, T *band)
 {
   if (kl == 0 && ku == 0)
     return banded_diag(m, n, gen, band);
@@ -71,18 +72,18 @@ int tobanded(const int m, const int n, const int kl, const int ku, const T *gen,
 
 
 // wrappers and utils
-extern "C" int tobanded_int(const int m, const int n, const int kl, const int ku, const int *__restrict gen, int *__restrict band)
+extern "C" int tobanded_int(cint m, cint n, cint kl, cint ku, const int *__restrict gen, int *__restrict band)
 {
   return tobanded(m, n, kl, ku, gen, band);
 }
 
-extern "C" int tobanded_dbl(const int m, const int n, const int kl, const int ku, const double *__restrict gen, double *__restrict band)
+extern "C" int tobanded_dbl(cint m, cint n, cint kl, cint ku, const double *__restrict gen, double *__restrict band)
 {
   return tobanded(m, n, kl, ku, gen, band);
 }
 
 // ncols is always the same as the input
-extern "C" int tobanded_numrows(const int kl, const int ku, const bool symmetric)
+extern "C" int tobanded_numrows(cint kl, cint ku, cbool symmetric)
 {
   int nrows;
   
