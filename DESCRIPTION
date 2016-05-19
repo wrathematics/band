@@ -1,0 +1,22 @@
+Package: band
+Type: Package
+Title: Banded Matrices
+Version: 0.1-0
+Description: Storage and methods for banded matrices.
+License: BSD 2-clause License + file LICENSE
+Depends:
+    R (>= 3.1.0)
+Imports:
+    methods
+Suggests:
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr
+NeedsCompilation: yes
+ByteCompile: yes
+URL: https://github.com/wrathematics/band
+BugReports: https://github.com/wrathematics/band/issues
+Authors@R: c(person("Drew", "Schmidt", role=c("aut", "cre"),
+    email="wrathematics@gmail.com"))
+Maintainer: Drew Schmidt <wrathematics@gmail.com>
+RoxygenNote: 5.0.1
