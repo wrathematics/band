@@ -1,5 +1,3 @@
-# http://www.netlib.org/lapack/lug/node124.html
-
 setClassUnion("Linalg", c("vector", "matrix"))
 
 #' Banded Matrix Classes
@@ -20,14 +18,14 @@ setClassUnion("Linalg", c("vector", "matrix"))
 setClass(
   Class="GenBandMat", 
   representation=representation(
-    Data="matrix",
+    Data="numeric",
     dim="integer",
     kl="integer",
     ku="integer"
   ),
   
   prototype=prototype(
-    Data=matrix(nrow=0, ncol=0),
+    Data=numeric(0),
     dim=c(1L, 1L),
     kl=0L,
     ku=0L
@@ -36,6 +34,8 @@ setClass(
   validity=valid.GenBandMat
 )
 
+
+
 #' @slot k
 #' Size of the bands in the symmetric case.
 #' 
@@ -43,18 +43,20 @@ setClass(
 setClass(
   Class="SymBandMat", 
   representation=representation(
-    Data="matrix",
+    Data="numeric",
     dim="integer",
     k="integer"
   ),
   
   prototype=prototype(
-    Data=matrix(nrow=0, ncol=0),
+    Data=numeric(0),
     dim=c(0L, 0L),
     k=0L
   ),
   
-  validity=valid.SymBandMat,
-  
-  contains="GenBandMat"
+  validity=valid.SymBandMat
 )
+
+
+
+setClassUnion("BandMat", c("GenBandMat", "SymBandMat"))
