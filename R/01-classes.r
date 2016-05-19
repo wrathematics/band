@@ -15,6 +15,7 @@ setClassUnion("Linalg", c("vector", "matrix"))
 #' @rdname classes
 #' @keywords Classes
 #' @docType class
+#' @export
 setClass(
   Class="GenBandMat", 
   representation=representation(
@@ -40,6 +41,7 @@ setClass(
 #' Size of the bands in the symmetric case.
 #' 
 #' @rdname classes
+#' @export
 setClass(
   Class="SymBandMat", 
   representation=representation(
