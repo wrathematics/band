@@ -79,10 +79,10 @@ int tomatrix(cint m, cint n, cint kl, cint ku, T *__restrict gen, const T *__res
 // wrappers
 extern "C" int tomatrix_int(cint m, cint n, cint kl, cint ku, int *__restrict gen, const int *__restrict band)
 {
-  return tomatrix<int>(m, n, kl, ku, gen, band);
+  return tomatrix(m, n, kl, ku, gen, band);
 }
 
 extern "C" int tomatrix_dbl(cint m, cint n, cint kl, cint ku, double *__restrict gen, const double *__restrict band)
 {
-  return tomatrix<double>(m, n, kl, ku, gen, band);
+  return tomatrix(m, n, kl, ku, gen, band);
 }
