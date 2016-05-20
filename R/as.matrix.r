@@ -8,7 +8,14 @@ asmat_BandMat <- function(x)
 
 
 
-
+#' as.matrix
+#' 
+#' @param x
+#' A banded matrix.
+#' 
+#' @return
+#' An R matrix.
+#' 
 #' @keywords Converters
 #' @export
 setMethod("as.matrix", signature(x="BandMat"), asmat_BandMat)
