@@ -41,16 +41,17 @@ SEXP R_tobanded(SEXP x, SEXP kl_, SEXP ku_)
   const int m = nrows(x);
   const int n = ncols(x);
   const int m_out = tobanded_numrows(kl, ku, false);
+  int check;
   
   switch (TYPEOF(x))
   {
     case INTSXP:
       PROTECT(ret = allocVector(INTSXP, m_out*n));
-      tobanded_int(m, n, kl, ku, INTEGER(x), INTEGER(ret));
+      check = tobanded_int(m, n, kl, ku, INTEGER(x), INTEGER(ret));
       break;
     case REALSXP:
       PROTECT(ret = allocVector(REALSXP, m_out*n));
-      tobanded_dbl(m, n, kl, ku, REAL(x), REAL(ret));
+      check = tobanded_dbl(m, n, kl, ku, REAL(x), REAL(ret));
       break;
     default:
       error("bad type");
@@ -70,21 +71,23 @@ SEXP R_tomatrix(SEXP x, SEXP m_, SEXP n_, SEXP kl_, SEXP ku_)
   const int n = INT(n_);
   const int kl = INT(kl_);
   const int ku = INT(ku_);
+  int check;
   
   switch (TYPEOF(x))
   {
     case INTSXP:
       PROTECT(ret = allocMatrix(INTSXP, m, n));
-      tomatrix_int(m, n, kl, ku, INTEGER(ret), INTEGER(x));
+      check = tomatrix_int(m, n, kl, ku, INTEGER(ret), INTEGER(x));
       break;
     case REALSXP:
       PROTECT(ret = allocMatrix(REALSXP, m, n));
-      tomatrix_dbl(m, n, kl, ku, REAL(ret), REAL(x));
+      check = tomatrix_dbl(m, n, kl, ku, REAL(ret), REAL(x));
       break;
     default:
       error("bad type");
   }
   
   UNPROTECT(1);
+  
   return ret;
 }
