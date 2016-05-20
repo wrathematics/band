@@ -33,7 +33,7 @@ as.banded <- function(x, kl, ku) ## TODO symmetric
   else if (missing(ku))
     ku <- kl
   
-  dim <- dim(x)
+  dim <- as.integer(dim(x))
   
   if (ku > dim[1L] || kl > dim[1L])
     stop("'ku' and 'kl' must each be smaller than nrow(x)")
