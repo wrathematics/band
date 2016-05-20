@@ -31,4 +31,13 @@ storage.mode(x) <- "logical"
 
 
 ### General band
-# TODO
+# Example from here: http://www.netlib.org/lapack/lug/node124.html
+x <- matrix(1:25, 5, 5)
+test <- as.banded(x, 2, 1)@Data
+truth <- c(NA, 1, 2, 3, 6, 7, 8, 9, 12, 13, 14, 15, 18, 19, 20, NA, 24, 25, NA, NA)
+stopifnot(all.equal(test, truth))
+
+storage.mode(x) <- "integer"
+test <- as.banded(x, 2, 1)@Data
+truth <- c(NA, 1, 2, 3, 6, 7, 8, 9, 12, 13, 14, 15, 18, 19, 20, NA, 24, 25, NA, NA)
+stopifnot(all.equal(test, truth))

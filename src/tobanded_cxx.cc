@@ -28,6 +28,10 @@
 // Storage reference: http://www.netlib.org/lapack/lug/node124.html
 #include "band.h"
 #include "NA.hh"
+#include "omputils.h"
+
+#define MIN(a,b) (a<b?a:b)
+#define MAX(a,b) (a>b?a:b)
 
 // ncols is always the same as the input
 extern "C" int tobanded_numrows(cint kl, cint ku, cbool symmetric)
@@ -60,25 +64,31 @@ static inline int banded_diag(cint m, cint n, const T *__restrict gen, T *__rest
 }
 
 
-
+#include <stdio.h>
 template <typename T>
 static inline int banded_gen(cint m, cint n, cint kl, cint ku, const T *__restrict gen, T *__restrict band)
 {
   int i, j;
-  int mj;
-  int ind = 0;
+  int mj, nrj;
+  int imin, imax;
   const int nr = tobanded_numrows(kl, ku, false);
+  const int len = nr*n;
   
-  for (i=0; i<kl; i++)
-    set_na(band+i);
+  initialize_na(band, len);
   
+  for (j=1; j<=n; j++)
+  {
+    mj = m*(j-1);
+    nrj = nr*(j-1);
+    imin = MAX(1, j-ku);
+    imax = MIN(m, j+kl);
+    
+    SAFE_FOR_SIMD
+    for (i=imin; i<=imax; i++)
+      band[(ku + i - j) + nrj] = gen[(i-1) + mj];
+  }
   
-  
-  
-  
-  
-  
-  return 0;
+return 0;
 }
 
 
