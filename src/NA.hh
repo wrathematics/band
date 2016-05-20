@@ -12,14 +12,14 @@ static inline void initialize_na(double *x, const int len)
 {
   SAFE_FOR_SIMD
   for (int i=0; i<len; i++)
-    memcpy((void *) (x + i), (void *) &R_NA_real, sizeof(*x));
+    memcpy(x + i, &R_NA_real, sizeof(*x));
 }
 
 static inline void initialize_na(int *x, const int len)
 {
   SAFE_FOR_SIMD
   for (int i=0; i<len; i++)
-    memcpy((void *) (x + i), (void *) &R_NA_int, sizeof(*x));
+    memcpy(x + i, &R_NA_int, sizeof(*x));
 }
 
 
