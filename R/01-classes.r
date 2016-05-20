@@ -61,4 +61,20 @@ setClass(
 
 
 
-setClassUnion("BandMat", c("GenBandMat", "SymBandMat"))
+setClass(
+  Class="DiagMat", 
+  representation=representation(
+    Data="numeric",
+    dim="integer"
+  ),
+  
+  prototype=prototype(
+    Data=numeric(0),
+    dim=c(1L, 1L)
+  ),
+  
+  validity=valid.DiagMat
+)
+
+
+setClassUnion("BandMat", c("DiagMat", "GenBandMat", "SymBandMat"))

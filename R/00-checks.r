@@ -13,3 +13,11 @@ valid.SymBandMat <- function(object)
   #TODO ...
   TRUE
 }
+
+valid.DiagMat <- function(object)
+{
+  if (!all(object@dim == length(object@Data)))
+    return("invalid dimension specification for DiagMatrix")
+  
+  return(TRUE)
+}

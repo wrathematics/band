@@ -24,7 +24,11 @@ as.banded <- function(x, kl, ku)
   kl <- as.integer(kl)
   
   out <- .Call(R_tobanded, x, kl, ku)
-  ret <- new("GenBandMat", Data=out, dim=dim, kl=kl, ku=ku)
+  
+  if (kl == 0L && ku == 0L)
+    ret <- new("DiagMat", Data=out, dim=dim)
+  else
+    ret <- new("GenBandMat", Data=out, dim=dim, kl=kl, ku=ku)
   
   ret
 }
