@@ -12,12 +12,18 @@ setClassUnion("VecTypes", c("numeric", "logical"))
 #' @slot dim
 #' matrix dimension.
 #' @slot kl,ku
-#' Size of the upper and lower bands.
+#' Size of the upper and lower bands (bandwidth) in the general case.
 #' 
 #' @name classes
-#' @rdname classes
+#' @aliases classes
 #' @keywords Classes
 #' @docType class
+#' @rdname classes
+NULL
+
+
+
+#' @rdname classes
 #' @export
 setClass(
   Class="GenBandMat", 
@@ -64,6 +70,8 @@ setClass(
 
 
 
+#' @rdname classes
+#' @export
 setClass(
   Class="DiagMat", 
   representation=representation(
@@ -78,6 +86,7 @@ setClass(
   
   validity=valid.DiagMat
 )
+
 
 
 setClassUnion("BandMat", c("DiagMat", "GenBandMat", "SymBandMat"))

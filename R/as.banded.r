@@ -1,10 +1,30 @@
-## TODO symmetric
-
+#' as.banded
+#' 
+#' Convert a regular R matrix into a banded matrix.
+#' 
+#' @details
+#' The values \code{kl} and \code{ku} describe the bandwidth of the band
+#' matrix.  If they are different, they will produce a general banded
+#' matrix.  If they are both 0, they will produce a diagonal matris.
+#' 
+#' @param x
+#' A matrix containing numeric, integer, or logical data.
+#' @param kl,ku
+#' The size of the lower and upper bands.  See the details section for more
+#' information.  Each should be a non-negative integer.
+#' 
+#' @return
+#' A banded matrix.
+#' 
+#' @seealso \code{\link{kdim}} and \code{\link{classes}}
+#' 
 #' @export
-as.banded <- function(x, kl, ku)
+as.banded <- function(x, kl, ku) ## TODO symmetric
 {
+  if (!is.matrix(x))
+    stop("argument 'x' must be a matrix")
   if (!is.numeric(x) && !is.logical(x))
-    stop("argument 'x' must be numeric or logical")
+    stop("argument 'x' must contain numeric, integer, or logical data")
   
   if (missing(kl) && missing(ku))
     stop("must supply at least one of 'kl' or 'ku'")

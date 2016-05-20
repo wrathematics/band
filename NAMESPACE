@@ -3,6 +3,7 @@
 S3method(print,BandMat)
 export(as.banded)
 export(kdim)
+exportClasses(DiagMat)
 exportClasses(GenBandMat)
 exportClasses(SymBandMat)
 exportMethods(as.matrix)
