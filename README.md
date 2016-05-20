@@ -6,9 +6,9 @@
 * **Author:** Drew Schmidt
 
 
-An R package for banded matrix storage.
+An R package for banded matrix storage, including symmetric and diagonal matrices.
 
-This package is very new and experimental at this time.
+This package is very new and experimental, and mostly non-functional at this time.
 
 
 
