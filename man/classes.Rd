@@ -5,6 +5,7 @@
 \alias{DiagMat-class}
 \alias{GenBandMat-class}
 \alias{SymBandMat-class}
+\alias{ZeroMat-class}
 \alias{classes}
 \title{Banded Matrix Classes}
 \description{

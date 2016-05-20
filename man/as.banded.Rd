@@ -36,5 +36,5 @@ as.banded(x, 0)
 \seealso{
 \code{\link{kdim}} and \code{\link{classes}}
 }
-\keyword{Converters}
+\keyword{Casters}
 

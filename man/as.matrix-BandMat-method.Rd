@@ -16,5 +16,5 @@ An R matrix.
 \description{
 as.matrix
 }
-\keyword{Converters}
+\keyword{Casters}
 
