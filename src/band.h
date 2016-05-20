@@ -49,6 +49,8 @@ typedef const double *__restrict cdbl_r;
 // asbanded
 int tobanded_int(cint m, cint n, cint kl, cint ku, const int *__restrict gen, int *__restrict band);
 int tobanded_dbl(cint m, cint n, cint kl, cint ku, const double *__restrict gen, double *__restrict band);
+int tobanded_lgl(cint m, cint n, cint kl, cint ku, const bool *__restrict gen, bool *__restrict band);
+
 
 int tobanded_numrows(cint kl, cint ku, cbool symmetric);
 

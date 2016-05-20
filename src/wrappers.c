@@ -54,6 +54,10 @@ SEXP R_tobanded(SEXP x, SEXP kl_, SEXP ku_)
       PROTECT(ret = allocVector(REALSXP, m_out*n));
       check = tobanded_dbl(m, n, kl, ku, REAL(x), REAL(ret));
       break;
+    case LGLSXP:
+      PROTECT(ret = allocVector(LGLSXP, m_out*n));
+      check = tobanded_lgl(m, n, kl, ku, LOGICAL(x), LOGICAL(ret));
+      break;
     default:
       error("bad type");
   }
