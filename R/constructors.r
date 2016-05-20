@@ -1,6 +1,7 @@
 #' Banded Matrix Constructors
 #' 
 #' Constructors for banded matrices. WARNING: for advanced users only.
+#' Use the caster function for conversions.
 #' 
 #' @details
 #' See url in the references for an explanation of the storage.
@@ -13,6 +14,7 @@
 #' The lower and upper bandwidths, respectively.
 #' 
 #' @references \url{http://www.netlib.org/lapack/lug/node124.html}
+#' @seealso \code{\link{as.banded}} and \code{\link{as.matrix}}
 #' @name constructors
 #' @rdname constructors
 NULL
