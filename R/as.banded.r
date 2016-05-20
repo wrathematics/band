@@ -55,9 +55,9 @@ as.banded <- function(x, kl, ku) ## TODO symmetric
   out <- .Call(R_tobanded, x, kl, ku)
   
   if (kl == 0L && ku == 0L)
-    ret <- new("DiagMat", Data=out, dim=dim)
+    ret <- diagmat(Data=out, dim=dim)
   else
-    ret <- new("GenBandMat", Data=out, dim=dim, kl=kl, ku=ku)
+    ret <- genbandmat(Data=out, dim=dim, kl=kl, ku=ku)
   
   ret
 }
