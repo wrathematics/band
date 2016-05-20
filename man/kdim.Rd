@@ -22,4 +22,5 @@ be different.  For a symmetric matrix, they will be the same.  For a
 diagonal matrix, they will both be 0.  In any case, each will be a
 non-negative integer.
 }
+\keyword{Accessors}
 

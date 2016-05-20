@@ -8,5 +8,7 @@ asmat_BandMat <- function(x)
 
 
 
+
+#' @keywords Converters
 #' @export
 setMethod("as.matrix", signature(x="BandMat"), asmat_BandMat)

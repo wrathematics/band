@@ -26,4 +26,5 @@ matrix.  If they are both 0, they will produce a diagonal matris.
 \seealso{
 \code{\link{kdim}} and \code{\link{classes}}
 }
+\keyword{Converters}
 

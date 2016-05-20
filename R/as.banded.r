@@ -17,7 +17,7 @@
 #' A banded matrix.
 #' 
 #' @seealso \code{\link{kdim}} and \code{\link{classes}}
-#' 
+#' @keywords Converters
 #' @export
 as.banded <- function(x, kl, ku) ## TODO symmetric
 {

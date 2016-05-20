@@ -19,6 +19,7 @@ getdim <- function(x) x@dim
 #' @return
 #' A length 2 vector, similar to \code{dim()}.
 #' 
+#' @keywords Accessors
 #' @export
 kdim <- function(x)
 {
