@@ -3,8 +3,8 @@
 #' @export
 as.banded <- function(x, kl, ku)
 {
-  if (!is.numeric(x)) #TODO allow logical?
-    stop("argument 'x' must be numeric")
+  if (!is.numeric(x) && !is.logical(x))
+    stop("argument 'x' must be numeric or logical")
   
   if (missing(kl) && missing(ku))
     stop("must supply at least one of 'kl' or 'ku'")

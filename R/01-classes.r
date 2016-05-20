@@ -1,5 +1,8 @@
 setClassUnion("Linalg", c("vector", "matrix"))
 
+setClassUnion("VecTypes", c("numeric", "logical"))
+
+
 #' Banded Matrix Classes
 #' 
 #' Class for general and symmetric banded matrices.
@@ -19,7 +22,7 @@ setClassUnion("Linalg", c("vector", "matrix"))
 setClass(
   Class="GenBandMat", 
   representation=representation(
-    Data="numeric",
+    Data="VecTypes",
     dim="integer",
     kl="integer",
     ku="integer"
@@ -45,7 +48,7 @@ setClass(
 setClass(
   Class="SymBandMat", 
   representation=representation(
-    Data="numeric",
+    Data="VecTypes",
     dim="integer",
     k="integer"
   ),
@@ -64,7 +67,7 @@ setClass(
 setClass(
   Class="DiagMat", 
   representation=representation(
-    Data="numeric",
+    Data="VecTypes",
     dim="integer"
   ),
   
