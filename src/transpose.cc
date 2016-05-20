@@ -29,18 +29,18 @@
 
 
 template <typename T>
-int tbanded(cint m, cint n, cint kl, cint ku, const T *__restrict band, const T *__restrict trans)
+int xposebanded(cint m, cint n, cint kl, cint ku, const T *__restrict band, const T *__restrict trans)
 {
   
 }
 
 // wrappers
-extern "C" int tbanded_int(cint m, cint n, cint kl, cint ku, const int *__restrict band, int *__restrict trans)
+extern "C" int xposebanded_int(cint m, cint n, cint kl, cint ku, const int *__restrict band, int *__restrict trans)
 {
-  return tbanded(m, n, kl, ku, band, trans);
+  return xposebanded(m, n, kl, ku, band, trans);
 }
 
-extern "C" int tbanded_dbl(cint m, cint n, cint kl, cint ku, const double *__restrict band, double *__restrict trans)
+extern "C" int xposebanded_dbl(cint m, cint n, cint kl, cint ku, const double *__restrict band, double *__restrict trans)
 {
-  return tbanded(m, n, kl, ku, band, trans);
+  return xposebanded(m, n, kl, ku, band, trans);
 }

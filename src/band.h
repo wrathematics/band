@@ -61,8 +61,8 @@ int tomatrix_int(cint m, cint n, cint kl, cint ku, int *__restrict gen, const in
 int tomatrix_dbl(cint m, cint n, cint kl, cint ku, double *__restrict gen, const double *__restrict band);
 
 // transpose
-int tbanded_int(cint m, cint n, cint kl, cint ku, const int *__restrict band, int *__restrict trans);
-int tbanded_dbl(cint m, cint n, cint kl, cint ku, const double *__restrict band, double *__restrict trans);
+int xposebanded_int(cint m, cint n, cint kl, cint ku, const int *__restrict band, int *__restrict trans);
+int xposebanded_dbl(cint m, cint n, cint kl, cint ku, const double *__restrict band, double *__restrict trans);
 
 
 #ifdef __cplusplus

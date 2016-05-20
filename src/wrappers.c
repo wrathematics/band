@@ -105,7 +105,7 @@ SEXP R_tomatrix(SEXP x, SEXP m_, SEXP n_, SEXP kl_, SEXP ku_)
 
 
 
-SEXP R_printer(SEXP x, SEXP m_, SEXP n_, SEXP kl_, SEXP ku_)
+SEXP R_matprinter(SEXP x, SEXP m_, SEXP n_, SEXP kl_, SEXP ku_)
 {
   const int m = INT(m_);
   const int n = INT(n_);
@@ -132,7 +132,7 @@ SEXP R_printer(SEXP x, SEXP m_, SEXP n_, SEXP kl_, SEXP ku_)
 
 
 
-SEXP R_tbanded(SEXP x, SEXP m_, SEXP n_, SEXP kl_, SEXP ku_)
+SEXP R_xposebanded(SEXP x, SEXP m_, SEXP n_, SEXP kl_, SEXP ku_)
 {
   SEXP ret;
   const int m = INT(m_);
@@ -145,15 +145,15 @@ SEXP R_tbanded(SEXP x, SEXP m_, SEXP n_, SEXP kl_, SEXP ku_)
   {
     case REALSXP:
       PROTECT(ret = allocMatrix(REALSXP, m, n));
-      check = tbanded_dbl(m, n, kl, ku, REAL(x), REAL(ret));
+      check = xposebanded_dbl(m, n, kl, ku, REAL(x), REAL(ret));
       break;
     case INTSXP:
       PROTECT(ret = allocMatrix(INTSXP, m, n));
-      check = tbanded_int(m, n, kl, ku, INTEGER(x), INTEGER(ret));
+      check = xposebanded_int(m, n, kl, ku, INTEGER(x), INTEGER(ret));
       break;
     case LGLSXP:
       PROTECT(ret = allocMatrix(LGLSXP, m, n));
-      check = tbanded_int(m, n, kl, ku, LOGICAL(x), LOGICAL(ret));
+      check = xposebanded_int(m, n, kl, ku, LOGICAL(x), LOGICAL(ret));
       break;
     default:
       error("bad type");
