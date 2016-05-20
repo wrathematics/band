@@ -36,16 +36,7 @@ extern "C" {
 
 #define INVALID_KDIMS -1
 
-typedef const bool cbool;
-
-typedef const int cint;
-typedef const double cdbl;
-
-typedef int *__restrict int_r;
-typedef const int *__restrict cint_r;
-
-typedef double *__restrict dbl_r;
-typedef const double *__restrict cdbl_r;
+#include "types.h"
 
 // print
 void matprinter_int(cint m, cint n, cint kl, cint ku, cint *x);
