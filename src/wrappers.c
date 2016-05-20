@@ -31,6 +31,7 @@
 #include <Rinternals.h>
 
 #define INT(x) INTEGER(x)[0]
+#define CHKRET(ret) if(ret) error("something went wrong")
 
 
 SEXP R_tobanded(SEXP x, SEXP kl_, SEXP ku_)
@@ -58,6 +59,8 @@ SEXP R_tobanded(SEXP x, SEXP kl_, SEXP ku_)
   }
   
   UNPROTECT(1);
+  CHKRET(check);
+  
   return ret;
 }
 
@@ -88,6 +91,34 @@ SEXP R_tomatrix(SEXP x, SEXP m_, SEXP n_, SEXP kl_, SEXP ku_)
   }
   
   UNPROTECT(1);
+  CHKRET(check);
   
   return ret;
+}
+
+
+
+SEXP R_printer(SEXP x, SEXP m_, SEXP n_, SEXP kl_, SEXP ku_)
+{
+  const int m = INT(m_);
+  const int n = INT(n_);
+  const int kl = INT(kl_);
+  const int ku = INT(ku_);
+  int check;
+  
+  switch (TYPEOF(x))
+  {
+    case INTSXP:
+      check = matprinter_int(m, n, kl, ku, INTEGER(x));
+      break;
+    case REALSXP:
+      check = matprinter_dbl(m, n, kl, ku, REAL(x));
+      break;
+    default:
+      error("bad type");
+  }
+  
+  CHKRET(check);
+  
+  return R_NilValue;
 }
