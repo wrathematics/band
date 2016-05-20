@@ -28,6 +28,21 @@
 // Storage reference: http://www.netlib.org/lapack/lug/node124.html
 #include "band.h"
 
+// ncols is always the same as the input
+extern "C" int tobanded_numrows(cint kl, cint ku, cbool symmetric)
+{
+  int nrows;
+  
+  if (symmetric)
+    nrows = kl + 1;
+  else
+    nrows = kl + ku + 1;
+  
+  return nrows;
+}
+
+
+
 template <typename T>
 static inline int banded_diag(cint m, cint n, const T *__restrict gen, T *__restrict band)
 {
@@ -72,7 +87,7 @@ int tobanded(cint m, cint n, cint kl, cint ku, const T *gen, T *band)
 
 
 
-// wrappers and utils
+// wrappers
 extern "C" int tobanded_int(cint m, cint n, cint kl, cint ku, const int *__restrict gen, int *__restrict band)
 {
   return tobanded(m, n, kl, ku, gen, band);
@@ -86,17 +101,4 @@ extern "C" int tobanded_dbl(cint m, cint n, cint kl, cint ku, const double *__re
 extern "C" int tobanded_lgl(cint m, cint n, cint kl, cint ku, const bool *__restrict gen, bool *__restrict band)
 {
   return tobanded(m, n, kl, ku, gen, band);
-}
-
-// ncols is always the same as the input
-extern "C" int tobanded_numrows(cint kl, cint ku, cbool symmetric)
-{
-  int nrows;
-  
-  if (symmetric)
-    nrows = kl + 1;
-  else
-    nrows = kl + ku + 1;
-  
-  return nrows;
 }
