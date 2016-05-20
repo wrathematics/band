@@ -66,7 +66,9 @@ static inline int mat_gen(cint m, cint n, cint kl, cint ku, T *__restrict gen, c
 template <typename T>
 int tomatrix(cint m, cint n, cint kl, cint ku, T *__restrict gen, const T *__restrict band)
 {
-  if (kl == 0 && ku == 0)
+  if (kl < 0 || ku < 0)
+    return INVALID_KDIMS;
+  else if (kl == 0 && ku == 0)
     return mat_diag(m, n, gen, band);
   else
     return mat_gen(m, n, kl, ku, gen, band);

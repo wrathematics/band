@@ -1,5 +1,8 @@
 xpose_BandMat <- function(x)
 {
+  if (class(x) == "DiagMat")
+    return(x)
+  
   dim <- getdim(x)
   k <- kdim(x)
   

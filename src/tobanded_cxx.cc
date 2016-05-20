@@ -79,7 +79,9 @@ static inline int banded_gen(cint m, cint n, cint kl, cint ku, const T *__restri
 template <typename T>
 int tobanded(cint m, cint n, cint kl, cint ku, const T *gen, T *band)
 {
-  if (kl == 0 && ku == 0)
+  if (kl < 0 || ku < 0)
+    return INVALID_KDIMS;
+  else if (kl == 0 && ku == 0)
     return banded_diag(m, n, gen, band);
   else
     return banded_gen(m, n, kl, ku, gen, band);

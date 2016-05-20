@@ -31,6 +31,10 @@
 template <typename T>
 int xposebanded(cint m, cint n, cint kl, cint ku, const T *__restrict band, const T *__restrict trans)
 {
+  if (kl < 0 || ku < 0)
+    return INVALID_KDIMS;
+  
+  
   
 }
 

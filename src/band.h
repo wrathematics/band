@@ -34,6 +34,7 @@ extern "C" {
 #include <stdbool.h>
 #endif
 
+#define INVALID_KDIMS -1
 
 typedef const bool cbool;
 
