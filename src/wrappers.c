@@ -46,17 +46,17 @@ SEXP R_tobanded(SEXP x, SEXP kl_, SEXP ku_)
   
   switch (TYPEOF(x))
   {
-    case INTSXP:
-      PROTECT(ret = allocVector(INTSXP, m_out*n));
-      check = tobanded_int(m, n, kl, ku, INTEGER(x), INTEGER(ret));
-      break;
     case REALSXP:
       PROTECT(ret = allocVector(REALSXP, m_out*n));
       check = tobanded_dbl(m, n, kl, ku, REAL(x), REAL(ret));
       break;
+    case INTSXP:
+      PROTECT(ret = allocVector(INTSXP, m_out*n));
+      check = tobanded_int(m, n, kl, ku, INTEGER(x), INTEGER(ret));
+      break;
     case LGLSXP:
       PROTECT(ret = allocVector(LGLSXP, m_out*n));
-      check = tobanded_lgl(m, n, kl, ku, LOGICAL(x), LOGICAL(ret));
+      check = tobanded_int(m, n, kl, ku, LOGICAL(x), LOGICAL(ret));
       break;
     default:
       error("bad type");
@@ -70,7 +70,6 @@ SEXP R_tobanded(SEXP x, SEXP kl_, SEXP ku_)
 
 
 
-#include <string.h>
 SEXP R_tomatrix(SEXP x, SEXP m_, SEXP n_, SEXP kl_, SEXP ku_)
 {
   SEXP ret;
@@ -82,13 +81,17 @@ SEXP R_tomatrix(SEXP x, SEXP m_, SEXP n_, SEXP kl_, SEXP ku_)
   
   switch (TYPEOF(x))
   {
+    case REALSXP:
+      PROTECT(ret = allocMatrix(REALSXP, m, n));
+      check = tomatrix_dbl(m, n, kl, ku, REAL(ret), REAL(x));
+      break;
     case INTSXP:
       PROTECT(ret = allocMatrix(INTSXP, m, n));
       check = tomatrix_int(m, n, kl, ku, INTEGER(ret), INTEGER(x));
       break;
-    case REALSXP:
-      PROTECT(ret = allocMatrix(REALSXP, m, n));
-      check = tomatrix_dbl(m, n, kl, ku, REAL(ret), REAL(x));
+    case LGLSXP:
+      PROTECT(ret = allocMatrix(LGLSXP, m, n));
+      check = tomatrix_int(m, n, kl, ku, LOGICAL(ret), LOGICAL(x));
       break;
     default:
       error("bad type");
@@ -108,21 +111,56 @@ SEXP R_printer(SEXP x, SEXP m_, SEXP n_, SEXP kl_, SEXP ku_)
   const int n = INT(n_);
   const int kl = INT(kl_);
   const int ku = INT(ku_);
-  int check;
   
   switch (TYPEOF(x))
   {
-    case INTSXP:
-      check = matprinter_int(m, n, kl, ku, INTEGER(x));
-      break;
     case REALSXP:
-      check = matprinter_dbl(m, n, kl, ku, REAL(x));
+      matprinter_dbl(m, n, kl, ku, REAL(x));
+      break;
+    case INTSXP:
+      matprinter_int(m, n, kl, ku, INTEGER(x));
+      break;
+    case LGLSXP:
+      matprinter_int(m, n, kl, ku, LOGICAL(x));
       break;
     default:
       error("bad type");
   }
   
+  return R_NilValue;
+}
+
+
+
+SEXP R_tbanded(SEXP x, SEXP m_, SEXP n_, SEXP kl_, SEXP ku_)
+{
+  SEXP ret;
+  const int m = INT(m_);
+  const int n = INT(n_);
+  const int kl = INT(kl_);
+  const int ku = INT(ku_);
+  int check;
+  
+  switch (TYPEOF(x))
+  {
+    case REALSXP:
+      PROTECT(ret = allocMatrix(REALSXP, m, n));
+      check = tbanded_dbl(m, n, kl, ku, REAL(x), REAL(ret));
+      break;
+    case INTSXP:
+      PROTECT(ret = allocMatrix(INTSXP, m, n));
+      check = tbanded_int(m, n, kl, ku, INTEGER(x), INTEGER(ret));
+      break;
+    case LGLSXP:
+      PROTECT(ret = allocMatrix(LGLSXP, m, n));
+      check = tbanded_int(m, n, kl, ku, LOGICAL(x), LOGICAL(ret));
+      break;
+    default:
+      error("bad type");
+  }
+  
+  UNPROTECT(1);
   CHKRET(check);
   
-  return R_NilValue;
+  return ret;
 }

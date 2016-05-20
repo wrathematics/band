@@ -46,17 +46,23 @@ typedef const int *__restrict cint_r;
 typedef double *__restrict dbl_r;
 typedef const double *__restrict cdbl_r;
 
-// asbanded
+// print
+void matprinter_int(cint m, cint n, cint kl, cint ku, cint *x);
+void matprinter_dbl(cint m, cint n, cint kl, cint ku, cdbl *x);
+
+// tobanded
 int tobanded_int(cint m, cint n, cint kl, cint ku, const int *__restrict gen, int *__restrict band);
 int tobanded_dbl(cint m, cint n, cint kl, cint ku, const double *__restrict gen, double *__restrict band);
-int tobanded_lgl(cint m, cint n, cint kl, cint ku, const bool *__restrict gen, bool *__restrict band);
-
 
 int tobanded_numrows(cint kl, cint ku, cbool symmetric);
 
-// asmatrix
+// tomatrix
 int tomatrix_int(cint m, cint n, cint kl, cint ku, int *__restrict gen, const int *__restrict band);
 int tomatrix_dbl(cint m, cint n, cint kl, cint ku, double *__restrict gen, const double *__restrict band);
+
+// transpose
+int tbanded_int(cint m, cint n, cint kl, cint ku, const int *__restrict band, int *__restrict trans);
+int tbanded_dbl(cint m, cint n, cint kl, cint ku, const double *__restrict band, double *__restrict trans);
 
 
 #ifdef __cplusplus
