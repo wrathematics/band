@@ -27,6 +27,7 @@
 
 // Storage reference: http://www.netlib.org/lapack/lug/node124.html
 #include "band.h"
+#include "NA.hh"
 
 // ncols is always the same as the input
 extern "C" int tobanded_numrows(cint kl, cint ku, cbool symmetric)
@@ -68,6 +69,13 @@ static inline int banded_gen(cint m, cint n, cint kl, cint ku, const T *__restri
   int ind = 0;
   const int nr = tobanded_numrows(kl, ku, false);
   
+  for (i=0; i<kl; i++)
+    set_na(band+i);
+  
+  
+  
+  
+  
   
   
   return 0;
@@ -96,11 +104,6 @@ extern "C" int tobanded_int(cint m, cint n, cint kl, cint ku, const int *__restr
 }
 
 extern "C" int tobanded_dbl(cint m, cint n, cint kl, cint ku, const double *__restrict gen, double *__restrict band)
-{
-  return tobanded(m, n, kl, ku, gen, band);
-}
-
-extern "C" int tobanded_lgl(cint m, cint n, cint kl, cint ku, const bool *__restrict gen, bool *__restrict band)
 {
   return tobanded(m, n, kl, ku, gen, band);
 }
