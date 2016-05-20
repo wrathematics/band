@@ -9,7 +9,7 @@ output:
     number_sections: true
     css: include/custom.css
     highlight: kate
-bibliography: include/coop.bib
+bibliography: include/band.bib
 csl: "include/ieee.csl"
 vignette: >
   %\VignetteIndexEntry{TODO}
