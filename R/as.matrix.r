@@ -23,6 +23,6 @@ asmat_BandMat <- function(x)
 #' @return
 #' An R matrix.
 #' 
-#' @keywords Converters
+#' @keywords Casters
 #' @export
 setMethod("as.matrix", signature(x="BandMat"), asmat_BandMat)

@@ -26,7 +26,7 @@
 #' as.banded(x, 0)
 #' 
 #' @seealso \code{\link{kdim}} and \code{\link{classes}}
-#' @keywords Converters
+#' @keywords Casters
 #' @export
 as.banded <- function(x, kl, ku) ## TODO symmetric
 {
