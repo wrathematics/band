@@ -9,8 +9,11 @@ as.banded(x, kl, ku)
 \arguments{
 \item{x}{A matrix containing numeric, integer, or logical data.}
 
-\item{kl, ku}{The size of the lower and upper bands.  See the details section for more
-information.  Each should be a non-negative integer.}
+\item{kl, ku}{The size of the lower and upper bands.  At least one value \code{kl} or
+\code{ku} must be supplied; however, if one is missing, the other will
+be assumed to be the same value. Each supplied value should be a
+non-negative integer. See the details section for more information
+about these values.}
 }
 \value{
 A banded matrix.
@@ -22,6 +25,13 @@ Convert a regular R matrix into a banded matrix.
 The values \code{kl} and \code{ku} describe the bandwidth of the band
 matrix.  If they are different, they will produce a general banded
 matrix.  If they are both 0, they will produce a diagonal matris.
+}
+\examples{
+x <- matrix(1:9, nrow=3)
+
+# A diagonal matrix
+as.banded(x, 0)
+
 }
 \seealso{
 \code{\link{kdim}} and \code{\link{classes}}
