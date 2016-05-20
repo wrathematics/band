@@ -21,3 +21,11 @@ valid.DiagMat <- function(object)
   
   return(TRUE)
 }
+
+valid.ZeroMat <- function(object)
+{
+  if (!all(object@dim > 0))
+    return("invalid dimension specification for ZeroMatrix")
+  
+  return(TRUE)
+}

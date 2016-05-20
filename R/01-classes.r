@@ -89,4 +89,21 @@ setClass(
 
 
 
-setClassUnion("BandMat", c("DiagMat", "GenBandMat", "SymBandMat"))
+#' @rdname classes
+#' @export
+setClass(
+  Class="ZeroMat", 
+  representation=representation(
+    dim="integer"
+  ),
+  
+  prototype=prototype(
+    dim=c(1L, 1L)
+  ),
+  
+  validity=valid.ZeroMat
+)
+
+
+
+setClassUnion("BandMat", c("ZeroMat", "DiagMat", "GenBandMat", "SymBandMat"))
