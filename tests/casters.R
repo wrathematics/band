@@ -41,3 +41,6 @@ storage.mode(x) <- "integer"
 test <- as.banded(x, 2, 1)@Data
 truth <- c(NA, 1, 2, 3, 6, 7, 8, 9, 12, 13, 14, 15, 18, 19, 20, NA, 24, 25, NA, NA)
 stopifnot(all.equal(test, truth))
+
+
+# TODO as.matrix() for general band
