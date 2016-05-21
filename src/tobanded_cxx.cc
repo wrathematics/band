@@ -29,9 +29,8 @@
 #include "band.h"
 #include "NA.hh"
 #include "omputils.h"
+#include "indices.h"
 
-#define MIN(a,b) (a<b?a:b)
-#define MAX(a,b) (a>b?a:b)
 
 // ncols is always the same as the input
 extern "C" int tobanded_numrows(cint kl, cint ku, cbool symmetric)
@@ -76,16 +75,16 @@ static inline int banded_gen(cint m, cint n, cint kl, cint ku, const T *__restri
   
   initialize_na(band, len);
   
-  for (j=1; j<=n; j++)
+  for (j=0; j<n; j++)
   {
-    mj = m*(j-1);
-    nrj = nr*(j-1);
-    imin = MAX(1, j-ku);
-    imax = MIN(m, j+kl);
+    mj = m*j;
+    nrj = nr*j;
+    imin = ind_imin(m, j, kl, ku);
+    imax = ind_imax(m, j, kl, ku);
     
     SAFE_FOR_SIMD
     for (i=imin; i<=imax; i++)
-      band[(ku + i - j) + nrj] = gen[(i-1) + mj];
+      band[ind_gen2band(nr, i, j, ku)] = gen[i + mj];
   }
   
 return 0;
