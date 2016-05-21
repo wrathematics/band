@@ -21,6 +21,8 @@ genbandmat(Data, dim, kl, ku)
 
 \item{Data}{The compact band matrix representation.}
 
+\item{triangle}{"u" or "l" for upper or lower, as in \code{as.symmetric()}.}
+
 \item{kl, ku}{The lower and upper bandwidths, respectively.}
 }
 \description{

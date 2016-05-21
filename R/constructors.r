@@ -33,6 +33,8 @@ diagmat <- function(Data, dim)
   new("DiagMat", Data=Data, dim=dim)
 }
 
+#' @param triangle
+#' "u" or "l" for upper or lower, as in \code{as.symmetric()}.
 #' @rdname constructors
 #' @export
 symmat <- function(Data, dim, triangle)

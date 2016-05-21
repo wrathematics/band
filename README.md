@@ -6,7 +6,16 @@
 * **Author:** Drew Schmidt
 
 
-An R package for banded matrix storage, including symmetric and diagonal matrices.
+An R package for packed matrix storage, including banded, symmetric, and diagonal matrices.
+
+In addition to a few virtual classes, we offer the following S4 classes:
+
+| Class      | Description  |
+|------------|------------- |
+| ZeroMat    | A zero matrix. Only dimension information is stored. | 
+| DiagMat    | Diagonal matrices. |
+| GenBandMat | A general band storage matrix. |
+| SymMat     | Packed symmetric (not band) storage. |
 
 This package is very new and experimental, and mostly non-functional at this time.
 

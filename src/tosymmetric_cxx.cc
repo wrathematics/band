@@ -35,8 +35,6 @@
 template <typename T>
 static int symm_u(cint n, const T *__restrict full, T *__restrict sym)
 {
-  const int len = TRIANGLESUM(n);
-  
   for (int j=0; j<n; j++)
   {
     int nj = n*j;
@@ -48,18 +46,18 @@ static int symm_u(cint n, const T *__restrict full, T *__restrict sym)
   return 0;
 }
 
+#include <stdio.h>
+
 template <typename T>
 static int symm_l(cint n, const T *__restrict full, T *__restrict sym)
 {
-  const int nn = n*n;
-  const int len = TRIANGLESUM(n);
+  const int n2 = n*2;
   
-  for (int j=0; j<n; j++)
+  for (int j=1; j<=n; j++)
   {
-    int nj = n*j;
-    SAFE_FOR_SIMD
-    for (int i=j; i<n; i++)
-      sym[i + ((nn-j)*(j-1))/2] = full[i + nj];
+    int nj = n*(j-1);
+    for (int i=j; i<=n; i++)
+      sym[ind_sym(n2, i, j)] = full[(i-1) + nj];
   }
   
   return 0;

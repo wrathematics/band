@@ -10,6 +10,20 @@
 #define TRIANGLESUM(n) (n*(n+1))/2
 
 
+// -----------------------------------------
+// symmetric
+// -----------------------------------------
+
+// i, j 1-based
+static inline int ind_sym(cint n2, cint i, cint j)
+{
+  return i + ((n2-j)*(j-1))/2 - 1;
+}
+
+// -----------------------------------------
+// banded
+// -----------------------------------------
+
 // min/max i values
 static inline int ind_imin(cint m, cint j, cint kl, cint ku)
 {
