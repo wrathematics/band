@@ -25,8 +25,10 @@
 */
 
 
-#include "band.h"
 #include <string.h>
+#include "band.h"
+#include "omputils.h"
+#include "indices.h"
 
 
 // Storage reference: http://www.netlib.org/lapack/lug/node124.html
@@ -52,10 +54,25 @@ static inline int mat_diag(cint m, cint n, T *__restrict gen, const T *__restric
 template <typename T>
 static inline int mat_gen(cint m, cint n, cint kl, cint ku, T *__restrict gen, const T *__restrict band)
 {
-  int ind_in;
-  int ind_out = 0;
+  int i, j;
+  int mj, nrj;
+  int imin, imax;
+  const int nr = tobanded_numrows(kl, ku, false);
+  const int len = nr*n;
   
-  // TODO
+  memset(gen, 0, m*n*sizeof(T));
+  
+  for (j=0; j<n; j++)
+  {
+    mj = m*j;
+    nrj = nr*j;
+    imin = ind_imin(m, j, kl, ku);
+    imax = ind_imax(m, j, kl, ku);
+    
+    SAFE_FOR_SIMD
+    for (i=imin; i<=imax; i++)
+      gen[i + mj] = band[ind_gen2band(nr, i, j, ku)];
+  }
   
   return 0;
 }
