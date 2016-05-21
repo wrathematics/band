@@ -10,7 +10,17 @@ asmat_BandMat <- function(x)
     return(ret)
   }
   
-  .Call(R_tomatrix, getData(x), dim[1L], dim[2L], k[1L], k[2L])
+  .Call(R_tomatrix_fromband, getData(x), dim[1L], dim[2L], k[1L], k[2L])
+}
+
+
+
+asmat_SymMat <- function(x)
+{
+  n <- getdim(x)[1L]
+  triangle <- x@triangle
+  
+  .Call(R_tomatrix_fromsym, getData(x), n, triangle)
 }
 
 
@@ -18,11 +28,20 @@ asmat_BandMat <- function(x)
 #' as.matrix
 #' 
 #' @param x
-#' A banded matrix.
+#' A banded or symmetric matrix.
 #' 
 #' @return
 #' An R matrix.
 #' 
 #' @keywords Casters
+#' @name as.matrix
+#' @rdname as.matrix
+NULL
+
+#' @rdname as.matrix
 #' @export
 setMethod("as.matrix", signature(x="BandMat"), asmat_BandMat)
+
+#' @rdname as.matrix
+#' @export
+setMethod("as.matrix", signature(x="SymMat"), asmat_SymMat)

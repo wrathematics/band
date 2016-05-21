@@ -25,12 +25,14 @@
 */
 
 
-#include "band.h"
-
 #include <R.h>
 #include <Rinternals.h>
 
+#include "band.h"
+#include "indices.h"
+
 #define INT(x) INTEGER(x)[0]
+#define CHARPT(x,i) ((char*)CHAR(STRING_ELT(x,i)))
 #define CHKRET(ret) if(ret) error("something went wrong")
 
 
@@ -70,7 +72,45 @@ SEXP R_tobanded(SEXP x, SEXP kl_, SEXP ku_)
 
 
 
-SEXP R_tomatrix(SEXP x, SEXP m_, SEXP n_, SEXP kl_, SEXP ku_)
+SEXP R_tosymmetric(SEXP x, SEXP triangle_)
+{
+  SEXP ret;
+  const int m = nrows(x);
+  const int n = ncols(x);
+  const int len = TRIANGLESUM(n);
+  const char triangle = CHARPT(triangle_, 0)[0];
+  int check;
+  
+  if (m != n)
+    error("'x' must be a square matrix");
+  
+  switch (TYPEOF(x))
+  {
+    case REALSXP:
+      PROTECT(ret = allocVector(REALSXP, len));
+      check = tosymmetric_dbl(n, triangle, REAL(x), REAL(ret));
+      break;
+    case INTSXP:
+      PROTECT(ret = allocVector(INTSXP, len));
+      check = tosymmetric_int(n, triangle, INTEGER(x), INTEGER(ret));
+      break;
+    case LGLSXP:
+      PROTECT(ret = allocVector(LGLSXP, len));
+      check = tosymmetric_int(n, triangle, LOGICAL(x), LOGICAL(ret));
+      break;
+    default:
+      error("bad type");
+  }
+  
+  UNPROTECT(1);
+  CHKRET(check);
+  
+  return ret;
+}
+
+
+
+SEXP R_tomatrix_fromband(SEXP x, SEXP m_, SEXP n_, SEXP kl_, SEXP ku_)
 {
   SEXP ret;
   const int m = INT(m_);
@@ -83,15 +123,48 @@ SEXP R_tomatrix(SEXP x, SEXP m_, SEXP n_, SEXP kl_, SEXP ku_)
   {
     case REALSXP:
       PROTECT(ret = allocMatrix(REALSXP, m, n));
-      check = tomatrix_dbl(m, n, kl, ku, REAL(ret), REAL(x));
+      check = tomatrix_fromband_dbl(m, n, kl, ku, REAL(ret), REAL(x));
       break;
     case INTSXP:
       PROTECT(ret = allocMatrix(INTSXP, m, n));
-      check = tomatrix_int(m, n, kl, ku, INTEGER(ret), INTEGER(x));
+      check = tomatrix_fromband_int(m, n, kl, ku, INTEGER(ret), INTEGER(x));
       break;
     case LGLSXP:
       PROTECT(ret = allocMatrix(LGLSXP, m, n));
-      check = tomatrix_int(m, n, kl, ku, LOGICAL(ret), LOGICAL(x));
+      check = tomatrix_fromband_int(m, n, kl, ku, LOGICAL(ret), LOGICAL(x));
+      break;
+    default:
+      error("bad type");
+  }
+  
+  UNPROTECT(1);
+  CHKRET(check);
+  
+  return ret;
+}
+
+
+
+SEXP R_tomatrix_fromsym(SEXP x, SEXP n_, SEXP triangle_)
+{
+  SEXP ret;
+  const int n = INT(n_);
+  const char triangle = CHARPT(triangle_, 0)[0];
+  int check;
+  
+  switch (TYPEOF(x))
+  {
+    case REALSXP:
+      PROTECT(ret = allocMatrix(REALSXP, n, n));
+      check = tomatrix_fromsym_dbl(n, triangle, REAL(ret), REAL(x));
+      break;
+    case INTSXP:
+      PROTECT(ret = allocMatrix(INTSXP, n, n));
+      check = tomatrix_fromsym_int(n, triangle, INTEGER(ret), INTEGER(x));
+      break;
+    case LGLSXP:
+      PROTECT(ret = allocMatrix(LGLSXP, n, n));
+      check = tomatrix_fromsym_int(n, triangle, LOGICAL(ret), LOGICAL(x));
       break;
     default:
       error("bad type");

@@ -48,9 +48,17 @@ int tobanded_dbl(cint m, cint n, cint kl, cint ku, const double *__restrict gen,
 
 int tobanded_numrows(cint kl, cint ku, cbool symmetric);
 
-// tomatrix
-int tomatrix_int(cint m, cint n, cint kl, cint ku, int *__restrict gen, const int *__restrict band);
-int tomatrix_dbl(cint m, cint n, cint kl, cint ku, double *__restrict gen, const double *__restrict band);
+// symmetric
+int tosymmetric_int(cint n, cchar tiangle, const int *__restrict full, int *__restrict sym);
+int tosymmetric_dbl(cint n, cchar triangle, const double *__restrict full, double *__restrict sym);
+
+// tomatrix_fromband
+int tomatrix_fromband_int(cint m, cint n, cint kl, cint ku, int *__restrict gen, const int *__restrict band);
+int tomatrix_fromband_dbl(cint m, cint n, cint kl, cint ku, double *__restrict gen, const double *__restrict band);
+
+// tomatrix_fromsym
+int tomatrix_fromsym_int(cint n, cchar triangle, int *__restrict full, const int *__restrict sym);
+int tomatrix_fromsym_dbl(cint n, cchar triangle, double *__restrict full, const double *__restrict sym);
 
 // transpose
 int xposebanded_int(cint m, cint n, cint kl, cint ku, const int *__restrict band, int *__restrict trans);

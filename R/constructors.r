@@ -35,6 +35,13 @@ diagmat <- function(Data, dim)
 
 #' @rdname constructors
 #' @export
+symmat <- function(Data, dim, triangle)
+{
+  new("SymMat", Data=Data, dim=dim, triangle=triangle)
+}
+
+#' @rdname constructors
+#' @export
 genbandmat <- function(Data, dim, kl, ku)
 {
   new("GenBandMat", Data=Data, dim=dim, kl=kl, ku=ku)

@@ -4,12 +4,15 @@
 \alias{constructors}
 \alias{diagmat}
 \alias{genbandmat}
+\alias{symmat}
 \alias{zeromat}
 \title{Banded Matrix Constructors}
 \usage{
 zeromat(dim)
 
 diagmat(Data, dim)
+
+symmat(Data, dim, triangle)
 
 genbandmat(Data, dim, kl, ku)
 }

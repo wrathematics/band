@@ -32,86 +32,59 @@
 #include "indices.h"
 
 
-// ncols is always the same as the input
-extern "C" int tobanded_numrows(cint kl, cint ku, cbool symmetric)
-{
-  int nrows;
-  
-  if (symmetric)
-    nrows = kl + 1;
-  else
-    nrows = kl + ku + 1;
-  
-  return nrows;
-}
-
-
-
 template <typename T>
-static inline int banded_diag(cint m, cint n, const T *__restrict gen, T *__restrict band)
+static int symm_u(cint n, const T *__restrict full, T *__restrict sym)
 {
-  int ind_gen;
-  int ind_band = 0;
+  const int len = TRIANGLESUM(n);
   
-  for (ind_gen=0; ind_gen<m*n; ind_gen+=m+1)
+  for (int j=0; j<n; j++)
   {
-    band[ind_band] = gen[ind_gen];
-    ind_band++;
+    int nj = n*j;
+    SAFE_FOR_SIMD
+    for (int i=0; i<=j; i++)
+      sym[i + TRIANGLESUM(j)] = full[i + nj];
   }
   
   return 0;
 }
 
-
 template <typename T>
-static inline int banded_gen(cint m, cint n, cint kl, cint ku, const T *__restrict gen, T *__restrict band)
+static int symm_l(cint n, const T *__restrict full, T *__restrict sym)
 {
-  int i, j;
-  int mj, nrj;
-  int imin, imax;
-  const int nr = tobanded_numrows(kl, ku, false);
-  const int len = nr*n;
+  const int nn = n*n;
+  const int len = TRIANGLESUM(n);
   
-  initialize_na(band, len);
-  
-  for (j=0; j<n; j++)
+  for (int j=0; j<n; j++)
   {
-    mj = m*j;
-    nrj = nr*j;
-    imin = ind_imin(m, j, kl, ku);
-    imax = ind_imax(m, j, kl, ku);
-    
+    int nj = n*j;
     SAFE_FOR_SIMD
-    for (i=imin; i<=imax; i++)
-      band[ind_gen2band(nr, i, j, ku)] = gen[i + mj];
+    for (int i=j; i<n; i++)
+      sym[i + ((nn-j)*(j-1))/2] = full[i + nj];
   }
   
-return 0;
+  return 0;
 }
 
-
-
-// interface
 template <typename T>
-int tobanded(cint m, cint n, cint kl, cint ku, const T *gen, T *band)
+int tosymmetric(cint n, cchar triangle, const T *__restrict full, T *__restrict sym)
 {
-  if (kl < 0 || ku < 0)
-    return INVALID_KDIMS;
-  else if (kl == 0 && ku == 0)
-    return banded_diag(m, n, gen, band);
+  if (triangle == 'U' || triangle == 'u')
+    return symm_u(n, full, sym);
+  else if (triangle == 'L' || triangle == 'l')
+    return symm_l(n, full, sym);
   else
-    return banded_gen(m, n, kl, ku, gen, band);
+    return -1;
 }
 
 
 
 // wrappers
-extern "C" int tobanded_int(cint m, cint n, cint kl, cint ku, const int *__restrict gen, int *__restrict band)
+extern "C" int tosymmetric_int(cint n, cchar triangle, const int *__restrict full, int *__restrict sym)
 {
-  return tobanded(m, n, kl, ku, gen, band);
+  return tosymmetric(n, triangle, full, sym);
 }
 
-extern "C" int tobanded_dbl(cint m, cint n, cint kl, cint ku, const double *__restrict gen, double *__restrict band)
+extern "C" int tosymmetric_dbl(cint n, cchar triangle, const double *__restrict full, double *__restrict sym)
 {
-  return tobanded(m, n, kl, ku, gen, band);
+  return tosymmetric(n, triangle, full, sym);
 }

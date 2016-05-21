@@ -8,7 +8,7 @@ valid.GenBandMat <- function(object)
   return(TRUE)
 }
 
-valid.SymBandMat <- function(object)
+valid.SymMat <- function(object)
 {
   #TODO ...
   TRUE

@@ -81,7 +81,7 @@ static inline int mat_gen(cint m, cint n, cint kl, cint ku, T *__restrict gen, c
 
 // interface
 template <typename T>
-int tomatrix(cint m, cint n, cint kl, cint ku, T *__restrict gen, const T *__restrict band)
+int tomatrix_fromband(cint m, cint n, cint kl, cint ku, T *__restrict gen, const T *__restrict band)
 {
   if (kl < 0 || ku < 0)
     return INVALID_KDIMS;
@@ -96,12 +96,12 @@ int tomatrix(cint m, cint n, cint kl, cint ku, T *__restrict gen, const T *__res
 
 
 // wrappers
-extern "C" int tomatrix_int(cint m, cint n, cint kl, cint ku, int *__restrict gen, const int *__restrict band)
+extern "C" int tomatrix_fromband_int(cint m, cint n, cint kl, cint ku, int *__restrict gen, const int *__restrict band)
 {
-  return tomatrix(m, n, kl, ku, gen, band);
+  return tomatrix_fromband(m, n, kl, ku, gen, band);
 }
 
-extern "C" int tomatrix_dbl(cint m, cint n, cint kl, cint ku, double *__restrict gen, const double *__restrict band)
+extern "C" int tomatrix_fromband_dbl(cint m, cint n, cint kl, cint ku, double *__restrict gen, const double *__restrict band)
 {
-  return tomatrix(m, n, kl, ku, gen, band);
+  return tomatrix_fromband(m, n, kl, ku, gen, band);
 }

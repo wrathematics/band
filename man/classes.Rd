@@ -4,7 +4,7 @@
 \name{classes}
 \alias{DiagMat-class}
 \alias{GenBandMat-class}
-\alias{SymBandMat-class}
+\alias{SymMat-class}
 \alias{ZeroMat-class}
 \alias{classes}
 \title{Banded Matrix Classes}
@@ -20,7 +20,7 @@ Class for general and symmetric banded matrices.
 
 \item{\code{kl,ku}}{Size of the upper and lower bands (bandwidth) in the general case.}
 
-\item{\code{k}}{Size of the bands in the symmetric case.}
+\item{\code{triangle}}{Size of the bands in the symmetric case.}
 }}
 \keyword{Classes}
 

@@ -1,6 +1,6 @@
-#' as.banded
+#' as.symmetric
 #' 
-#' Convert a regular R matrix into a banded matrix.
+#' Convert a regular R matrix into a packed symmetric matrix.
 #' 
 #' @details
 #' The values \code{kl} and \code{ku} describe the bandwidth of the band
@@ -17,47 +17,34 @@
 #' about these values.
 #' 
 #' @return
-#' A banded matrix.
+#' A symmetric matrix.
 #' 
 #' @examples
 #' x <- matrix(1:9, nrow=3)
 #' 
 #' # A diagonal matrix
-#' as.banded(x, 0)
+#' as.symmetric(x)
 #' 
 #' @seealso \code{\link{kdim}} and \code{\link{classes}}
 #' @keywords Casters
 #' @export
-as.banded <- function(x, kl, ku)
+as.symmetric <- function(x, triangle="u")
 {
   if (!is.matrix(x))
     stop("argument 'x' must be a matrix")
   if (!is.numeric(x) && !is.logical(x))
     stop("argument 'x' must contain numeric, integer, or logical data")
   
-  if (missing(kl) && missing(ku))
-    stop("must supply at least one of 'kl' or 'ku'")
-  else if (missing(kl))
-    kl <- ku
-  else if (missing(ku))
-    ku <- kl
+  if (!is.character(triangle) || length(triangle) != 1 || nchar(triangle) != 1)
+    stop("argument 'triangle' must be a single character")
   
-  dim <- as.integer(dim(x))
+  triangle <- tolower(triangle)
+  if (triangle != "u" && triangle != "l")
+    stop("argument 'triangle' must be one of 'u' for upper or 'l' for lower")
   
-  if (ku > dim[1L] || kl > dim[1L])
-    stop("'ku' and 'kl' must each be smaller than nrow(x)")
-  if (max(ku, kl) > min(dim))
-    warning("banded storage schemes are only practical if kl, ku << min(dim(x))")
+  out <- .Call(R_tosymmetric, x, triangle)
   
-  ku <- as.integer(ku)
-  kl <- as.integer(kl)
-  
-  out <- .Call(R_tobanded, x, kl, ku)
-  
-  if (kl == 0L && ku == 0L)
-    ret <- diagmat(Data=out, dim=dim)
-  else
-    ret <- genbandmat(Data=out, dim=dim, kl=kl, ku=ku)
+  ret <- symmat(Data=out, dim=dim(x), triangle=triangle)
   
   ret
 }

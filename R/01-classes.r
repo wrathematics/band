@@ -46,26 +46,26 @@ setClass(
 
 
 
-#' @slot k
+#' @slot triangle
 #' Size of the bands in the symmetric case.
 #' 
 #' @rdname classes
 #' @export
 setClass(
-  Class="SymBandMat", 
+  Class="SymMat", 
   representation=representation(
     Data="VecTypes",
     dim="integer",
-    k="integer"
+    triangle="character"
   ),
   
   prototype=prototype(
     Data=numeric(0),
     dim=c(0L, 0L),
-    k=0L
+    triangle="u"
   ),
   
-  validity=valid.SymBandMat
+  validity=valid.SymMat
 )
 
 
@@ -106,4 +106,4 @@ setClass(
 
 
 
-setClassUnion("BandMat", c("ZeroMat", "DiagMat", "GenBandMat", "SymBandMat"))
+setClassUnion("BandMat", c("ZeroMat", "DiagMat", "GenBandMat"))

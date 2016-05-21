@@ -7,6 +7,9 @@
 #define MIN(a,b) (a<b?a:b)
 #define MAX(a,b) (a>b?a:b)
 
+#define TRIANGLESUM(n) (n*(n+1))/2
+
+
 // min/max i values
 static inline int ind_imin(cint m, cint j, cint kl, cint ku)
 {
