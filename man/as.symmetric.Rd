@@ -9,29 +9,33 @@ as.symmetric(x, triangle = "u")
 \arguments{
 \item{x}{A matrix containing numeric, integer, or logical data.}
 
-\item{kl, ku}{The size of the lower and upper bands.  At least one value \code{kl} or
-\code{ku} must be supplied; however, if one is missing, the other will
-be assumed to be the same value. Each supplied value should be a
-non-negative integer. See the details section for more information
-about these values.}
+\item{triangle}{A single character, either "u" or "l" for upper or lower, respectively.
+This determines which triangle is used to create the packed storage matrix.
+The default is the upper triangle.  Case is ignored.}
 }
 \value{
 A symmetric matrix.
 }
 \description{
-Convert a regular R matrix into a packed symmetric matrix.
+Convert a regular R matrix into a packed symmetric matrix, whether or not
+the input matrix was symmetric. Test for symmetry with R's
+\code{isSymmetric()}.
 }
 \details{
-The values \code{kl} and \code{ku} describe the bandwidth of the band
-matrix.  If they are different, they will produce a general banded
-matrix.  If they are both 0, they will produce a diagonal matris.
+The storage scheme is packed symmetric storage, so only the diagonal and
+the specified triangle are stored.
 }
 \examples{
-x <- matrix(1:9, nrow=3)
-
-# A diagonal matrix
+x <- matrix(1:25, nrow=5)
+# use the upper triangle. note that 'x' is not symmetric, but the return is
 as.symmetric(x)
 
+# lower triangle
+as.symmetric(x, 'l')
+
+}
+\references{
+\url{http://www.netlib.org/lapack/lug/node123.html}
 }
 \seealso{
 \code{\link{kdim}} and \code{\link{classes}}

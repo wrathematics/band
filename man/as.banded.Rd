@@ -27,11 +27,17 @@ matrix.  If they are different, they will produce a general banded
 matrix.  If they are both 0, they will produce a diagonal matris.
 }
 \examples{
-x <- matrix(1:9, nrow=3)
+x <- matrix(1:25, nrow=5)
 
 # A diagonal matrix
 as.banded(x, 0)
 
+# A general banded matrix
+as.banded(x, 2, 1)
+
+}
+\references{
+\url{http://www.netlib.org/lapack/lug/node124.html}
 }
 \seealso{
 \code{\link{kdim}} and \code{\link{classes}}

@@ -20,11 +20,15 @@
 #' A banded matrix.
 #' 
 #' @examples
-#' x <- matrix(1:9, nrow=3)
+#' x <- matrix(1:25, nrow=5)
 #' 
 #' # A diagonal matrix
 #' as.banded(x, 0)
 #' 
+#' # A general banded matrix
+#' as.banded(x, 2, 1)
+#' 
+#' @references \url{http://www.netlib.org/lapack/lug/node124.html}
 #' @seealso \code{\link{kdim}} and \code{\link{classes}}
 #' @keywords Casters
 #' @export
