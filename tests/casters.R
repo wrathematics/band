@@ -42,6 +42,11 @@ storage.mode(truth) <- "double"
 test <- as.banded(x, 2, 1)@Data
 stopifnot(all.equal(test, truth))
 
+
 truth <- matrix(c(1, 2, 0, 0, 0, 6, 7, 8, 0, 0, 0, 12, 13, 14, 0, 0, 0, 18, 19, 20, 0, 0, 0, 24, 25), 5)
 test <- as.matrix(as.banded(x, 1, 1))
+stopifnot(all.equal(test, truth))
+
+truth <- matrix(c(1, 2, 3, 0, 0, 6, 7, 8, 9, 0, 0, 12, 13, 14, 15, 0, 0, 18, 19, 20, 0, 0, 0, 24, 25), 5)
+test <- as.matrix(as.banded(x, 2, 1))
 stopifnot(all.equal(test, truth))
