@@ -58,14 +58,11 @@ bool is_symmetric(cint n, cint k, const T *band)
   {
     const int nj = n*j;
     const int nrj = nr*j;
-    const int imin = ind_imin(n, j, k, k);
+    const int imin = MAX(ind_imin(n, j, k, k), j+1);
     const int imax = ind_imax(n, j, k, k);
     
     for (int i=imin; i<=imax; i++)
     {
-      if (i == j)
-        continue;
-      
       const T t1 = band[ind_gen2band(nr, i, j, k)];
       const T t2 = band[ind_gen2band(nr, j, i, k)];
       
