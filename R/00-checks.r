@@ -10,14 +10,16 @@ valid.GenBandMat <- function(object)
 
 valid.SymMat <- function(object)
 {
-  #TODO ...
+  if (object@dim[1L] != object@dim[2L])
+    return("invalid dimension specification for SymMat")
+  
   TRUE
 }
 
 valid.DiagMat <- function(object)
 {
-  # if (!all(object@dim == length(object@Data)))
-  #   return("invalid dimension specification for DiagMatrix")
+  if (!any(object@dim == length(object@Data)))
+    return("invalid dimension specification for DiagMatrix")
   
   return(TRUE)
 }
