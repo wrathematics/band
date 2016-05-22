@@ -35,14 +35,10 @@
 // ncols is always the same as the input
 extern "C" int tobanded_numrows(cint kl, cint ku, cbool symmetric)
 {
-  int nrows;
-  
   if (symmetric)
-    nrows = kl + 1;
+    return kl + 1;
   else
-    nrows = kl + ku + 1;
-  
-  return nrows;
+    return kl + ku + 1;
 }
 
 
@@ -50,10 +46,9 @@ extern "C" int tobanded_numrows(cint kl, cint ku, cbool symmetric)
 template <typename T>
 static inline int banded_diag(cint m, cint n, const T *__restrict gen, T *__restrict band)
 {
-  int ind_gen;
   int ind_band = 0;
   
-  for (ind_gen=0; ind_gen<m*n; ind_gen+=m+1)
+  for (int ind_gen=0; ind_gen<m*n; ind_gen+=m+1)
   {
     band[ind_band] = gen[ind_gen];
     ind_band++;
@@ -66,23 +61,20 @@ static inline int banded_diag(cint m, cint n, const T *__restrict gen, T *__rest
 template <typename T>
 static inline int banded_gen(cint m, cint n, cint kl, cint ku, const T *__restrict gen, T *__restrict band)
 {
-  int i, j;
-  int mj, nrj;
-  int imin, imax;
   const int nr = tobanded_numrows(kl, ku, false);
   const int len = nr*n;
   
   initialize_na(band, len);
   
-  for (j=0; j<n; j++)
+  for (int j=0; j<n; j++)
   {
-    mj = m*j;
-    nrj = nr*j;
-    imin = ind_imin(m, j, kl, ku);
-    imax = ind_imax(m, j, kl, ku);
+    const int mj = m*j;
+    const int nrj = nr*j;
+    const int imin = ind_imin(m, j, kl, ku);
+    const int imax = ind_imax(m, j, kl, ku);
     
     SAFE_FOR_SIMD
-    for (i=imin; i<=imax; i++)
+    for (int i=imin; i<=imax; i++)
       band[ind_gen2band(nr, i, j, ku)] = gen[i + mj];
   }
   

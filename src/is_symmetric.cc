@@ -47,7 +47,6 @@ static inline bool samenum(cdbl x, cdbl y)
 
 
 
-// interface
 template <typename T>
 bool is_symmetric(cint n, cint k, const T *band)
 {
