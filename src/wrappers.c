@@ -212,20 +212,21 @@ SEXP R_xposebanded(SEXP x, SEXP m_, SEXP n_, SEXP kl_, SEXP ku_)
   const int n = INT(n_);
   const int kl = INT(kl_);
   const int ku = INT(ku_);
+  const int len = LENGTH(x);
   int check;
   
   switch (TYPEOF(x))
   {
     case REALSXP:
-      PROTECT(ret = allocMatrix(REALSXP, m, n));
+      PROTECT(ret = allocVector(REALSXP, len));
       check = xposebanded_dbl(m, n, kl, ku, REAL(x), REAL(ret));
       break;
     case INTSXP:
-      PROTECT(ret = allocMatrix(INTSXP, m, n));
+      PROTECT(ret = allocVector(INTSXP, len));
       check = xposebanded_int(m, n, kl, ku, INTEGER(x), INTEGER(ret));
       break;
     case LGLSXP:
-      PROTECT(ret = allocMatrix(LGLSXP, m, n));
+      PROTECT(ret = allocVector(LGLSXP, len));
       check = xposebanded_int(m, n, kl, ku, LOGICAL(x), LOGICAL(ret));
       break;
     default:

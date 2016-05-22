@@ -26,17 +26,39 @@
 
 
 #include "band.h"
+#include "types.h"
+#include "indices.h"
+#include "NA.hh"
 
 
 template <typename T>
-int xposebanded(cint m, cint n, cint kl, cint ku, const T *__restrict band, const T *__restrict trans)
+int xposebanded(cint m, cint n, cint kl, cint ku, const T *__restrict band, T *__restrict trans)
 {
-  if (kl < 0 || ku < 0)
-    return INVALID_KDIMS;
+  const int nr = tobanded_numrows(kl, ku, false);
+  const int len = nr*n;
   
+  initialize_na(trans, len);
   
+  for (int j=0; j<n; j++)
+  {
+    const int nj = n*j;
+    const int nrj = nr*j;
+    const int imin = ind_imin(m, j, kl, ku);
+    const int imax = ind_imax(m, j, kl, ku);
+    
+    for (int i=imin; i<=imax; i++)
+    {
+      const int ind1 = ind_gen2band(nr, i, j, ku);
+      const int ind2 = ind_gen2band(nr, j, i, ku);
+      trans[ind1] = band[ind2];
+      // trans[ind2] = band[ind1];
+    }
+  }
   
+  return 0;
 }
+
+
 
 // wrappers
 extern "C" int xposebanded_int(cint m, cint n, cint kl, cint ku, const int *__restrict band, int *__restrict trans)
