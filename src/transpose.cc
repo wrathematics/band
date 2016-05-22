@@ -49,9 +49,9 @@ int xposebanded(cint m, cint n, cint kl, cint ku, const T *__restrict band, T *_
     for (int i=imin; i<=imax; i++)
     {
       const int ind1 = ind_gen2band(nr, i, j, ku);
-      const int ind2 = ind_gen2band(nr, j, i, ku);
-      trans[ind1] = band[ind2];
-      // trans[ind2] = band[ind1];
+      const int ind2 = ind_gen2band(nr, j, i, kl);
+      
+      trans[ind2] = band[ind1];
     }
   }
   

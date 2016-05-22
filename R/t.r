@@ -16,7 +16,8 @@ xpose_BandMat <- function(x)
   dim <- getdim(x)
   k <- kdim(x)
   
-  .Call(R_xposebanded, getData(x), dim[1L], dim[2L], k[1L], k[2L])
+  out <- .Call(R_xposebanded, getData(x), dim[1L], dim[2L], k[1L], k[2L])
+  genbandmat(out, rev(dim), k[2L], k[1L])
 }
 
 xpose_err <- function(x)
