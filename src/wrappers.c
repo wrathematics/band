@@ -237,3 +237,34 @@ SEXP R_xposebanded(SEXP x, SEXP m_, SEXP n_, SEXP kl_, SEXP ku_)
   
   return ret;
 }
+
+
+
+SEXP R_is_symmetric(SEXP x, SEXP n_, SEXP k_)
+{
+  SEXP ret;
+  const int n = INT(n_);
+  const int k = INT(k_);
+  int retval;
+  
+  switch (TYPEOF(x))
+  {
+    case REALSXP:
+      retval = is_symmetric_dbl(n, k, REAL(x));
+      break;
+    case INTSXP:
+      retval = is_symmetric_int(n, k, INTEGER(x));
+      break;
+    case LGLSXP:
+      retval = is_symmetric_int(n, k, LOGICAL(x));
+      break;
+    default:
+      error("bad type");
+  }
+  
+  PROTECT(ret = allocVector(LGLSXP, 1));
+  LOGICAL(ret)[0] = retval;
+  UNPROTECT(1);
+  
+  return ret;
+}
