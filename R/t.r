@@ -1,16 +1,3 @@
-xpose_BandMat <- function(x)
-{
-  if (class(x) == "DiagMat")
-    return(x)
-  
-  dim <- getdim(x)
-  k <- kdim(x)
-  
-  .Call(R_xposebanded, getData(x), dim[1L], dim[2L], k[1L], k[2L])
-}
-
-
-
 #' t
 #' 
 #' @param x
@@ -20,5 +7,38 @@ xpose_BandMat <- function(x)
 #' A banded matrix of the same type.
 #' 
 #' @keywords LinAlg
+#' @name xpose
+#' @rdname xpose
+NULL
+
+xpose_BandMat <- function(x)
+{
+  dim <- getdim(x)
+  k <- kdim(x)
+  
+  .Call(R_xposebanded, getData(x), dim[1L], dim[2L], k[1L], k[2L])
+}
+
+xpose_err <- function(x)
+{
+  if (class(x) == "ZeroMat")
+    nm <- "zero"
+  else if (class(x) == "DiagMat")
+    nm <- "diagonal"
+  else if (class(x) == "SymMat")
+    nm <- "symmetric"
+  
+  stop(paste("a", nm, "matrix is its own transpose"))
+}
+
+#' @rdname xpose
 #' @export
-setMethod("t", signature(x="BandMat"), xpose_BandMat)
+setMethod("t", signature(x="BandMat"), xpose_err)
+
+#' @rdname xpose
+#' @export
+setMethod("t", signature(x="GenBandMat"), xpose_BandMat)
+
+#' @rdname xpose
+#' @export
+setMethod("t", signature(x="SymMat"), xpose_err)
