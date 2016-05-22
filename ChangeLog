@@ -3,3 +3,4 @@ Release 0.1-0 (//):
   * Add as.banded().
   * Add as.matrix().
   * Add support for packed symmetric matrices via SymMat; add casters.
+  * Add isSymmetric().
