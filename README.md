@@ -17,7 +17,15 @@ In addition to a few virtual classes, we offer the following S4 classes:
 | GenBandMat | A general band storage matrix. |
 | SymMat     | Packed symmetric (not band) storage. |
 
-This package is very new and experimental, and mostly non-functional at this time.
+The list of currently implemented methods is:
+
+| Description | Functions |
+|-------------|---------- |
+| Casters | `as.banded()`, `as.matrix()`, `as.symmetric()` |
+| Checks | `isSymmetric()` | 
+| Transpose | `t()` |
+
+Note that attempting to transpose a zero, diagonal, or symmetric will produce an error *because these are already symmetric* and there is no good reason to create a copy.
 
 
 
