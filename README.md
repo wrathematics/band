@@ -25,7 +25,7 @@ The list of currently implemented methods is:
 | Checks | `isSymmetric()` | 
 | Transpose | `t()` |
 
-Note that attempting to transpose a zero, diagonal, or symmetric matrix will produce an error *because these are already its own transpose* and there is no good reason to create a copy.
+Note that attempting to transpose a zero, diagonal, or symmetric matrix will produce an error *because these are already their own transpose* and there is no good reason to create a copy.
 
 
 
