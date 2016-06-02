@@ -13,9 +13,9 @@ In addition to a few virtual classes, we offer the following S4 classes:
 | Class      | Description  |
 |------------|------------- |
 | ZeroMat    | A zero matrix. Only dimension information is stored. | 
-| DiagMat    | Diagonal matrices. |
-| GenBandMat | A general band storage matrix. |
-| SymMat     | Packed symmetric (not band) storage. |
+| DiagMat    | Diagonal matrices. Only the diagonal entries are stored. |
+| GenBandMat | A general band storage matrix. Only the band elements are stored. |
+| SymMat     | Packed symmetric (not band) storage.  Only one triangle (+ diagonal) is stored. |
 
 The list of currently implemented methods is:
 
@@ -25,7 +25,7 @@ The list of currently implemented methods is:
 | Checks | `isSymmetric()` | 
 | Transpose | `t()` |
 
-Note that attempting to transpose a zero, diagonal, or symmetric will produce an error *because these are already symmetric* and there is no good reason to create a copy.
+Note that attempting to transpose a zero, diagonal, or symmetric matrix will produce an error *because these are already its own transpose* and there is no good reason to create a copy.
 
 
 
