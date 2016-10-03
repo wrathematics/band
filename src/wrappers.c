@@ -31,6 +31,8 @@
 #include "band.h"
 #include "indices.h"
 
+#define TYPE_ERR error("data must be numeric (int, double) or logical")
+
 
 SEXP R_tobanded(SEXP x, SEXP kl_, SEXP ku_)
 {
@@ -187,10 +189,8 @@ SEXP R_matprinter(SEXP x, SEXP m_, SEXP n_, SEXP kl_, SEXP ku_)
       matprinter_dbl(m, n, kl, ku, REAL(x));
       break;
     case INTSXP:
-      matprinter_int(m, n, kl, ku, INTEGER(x));
-      break;
     case LGLSXP:
-      matprinter_int(m, n, kl, ku, LOGICAL(x));
+      matprinter_int(m, n, kl, ku, INTEGER(x));
       break;
     default:
       error("bad type");
@@ -271,7 +271,6 @@ SEXP R_xpose_band(SEXP x, SEXP m_, SEXP n_, SEXP kl_, SEXP ku_)
 
 SEXP R_isSym_band(SEXP x, SEXP n_, SEXP k_)
 {
-  SEXP ret;
   const int n = INT(n_);
   const int k = INT(k_);
   int retval;
@@ -282,27 +281,20 @@ SEXP R_isSym_band(SEXP x, SEXP n_, SEXP k_)
       retval = isSym_band_dbl(n, k, REAL(x));
       break;
     case INTSXP:
-      retval = isSym_band_int(n, k, INTEGER(x));
-      break;
     case LGLSXP:
-      retval = isSym_band_int(n, k, LOGICAL(x));
+      retval = isSym_band_int(n, k, INTEGER(x));
       break;
     default:
       error("bad type");
   }
   
-  PROTECT(ret = allocVector(LGLSXP, 1));
-  LOGICAL(ret)[0] = retval;
-  UNPROTECT(1);
-  
-  return ret;
+  return ScalarLogical(retval);
 }
 
 
 
 SEXP R_isSym_full(SEXP x)
 {
-  SEXP ret;
   const int n = nrows(x);
   int retval;
   
@@ -315,18 +307,12 @@ SEXP R_isSym_full(SEXP x)
       retval = isSym_full_dbl(n, REAL(x));
       break;
     case INTSXP:
-      retval = isSym_full_int(n, INTEGER(x));
-      break;
     case LGLSXP:
-      retval = isSym_full_int(n, LOGICAL(x));
+      retval = isSym_full_int(n, INTEGER(x));
       break;
     default:
       error("bad type");
   }
   
-  PROTECT(ret = allocVector(LGLSXP, 1));
-  LOGICAL(ret)[0] = retval;
-  UNPROTECT(1);
-  
-  return ret;
+  return ScalarLogical(retval);
 }
