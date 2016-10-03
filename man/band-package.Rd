@@ -5,7 +5,7 @@
 \alias{band-package}
 \title{Banded Matrices}
 \description{
-TODO
+Storage and methods for banded matrices.
 }
 \author{
 Drew Schmidt

@@ -1,7 +1,7 @@
 #' Banded Matrices
 #' 
 #' @description
-#' TODO
+#' Storage and methods for banded matrices.
 #' 
 #' @import methods
 #' 
