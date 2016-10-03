@@ -1,6 +1,7 @@
 Release 0.1-0 (//):
-  * Add various BandMat classes.
-  * Add as.banded().
-  * Add as.matrix().
-  * Add support for packed symmetric matrices via SymMat; add casters.
-  * Add isSymmetric().
+  * Added various BandMat classes
+  * Added as.banded()
+  * Added as.matrix()
+  * Added support for packed symmetric matrices via SymMat; add casters
+  * Added isSym()
+  * Added xpose()
