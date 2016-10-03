@@ -5,6 +5,7 @@
 \alias{t,BandMat-method}
 \alias{t,GenBandMat-method}
 \alias{t,SymMat-method}
+\alias{t,matrix-method}
 \alias{xpose}
 \title{t}
 \usage{
@@ -13,6 +14,8 @@
 \S4method{t}{GenBandMat}(x)
 
 \S4method{t}{SymMat}(x)
+
+\S4method{t}{matrix}(x)
 }
 \arguments{
 \item{x}{A banded matrix.}

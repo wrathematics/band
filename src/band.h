@@ -75,8 +75,10 @@ int tomatrix_fromsym_int(cint n, cchar triangle, int *__restrict full, const int
 int tomatrix_fromsym_dbl(cint n, cchar triangle, double *__restrict full, const double *__restrict sym);
 
 // transpose
-int xposebanded_int(cint m, cint n, cint kl, cint ku, const int *__restrict band, int *__restrict trans);
-int xposebanded_dbl(cint m, cint n, cint kl, cint ku, const double *__restrict band, double *__restrict trans);
+int xpose_full_int(cint m, cint n, const int *__restrict x, int *__restrict tx);
+int xpose_full_dbl(cint m, cint n, const double *__restrict x, double *__restrict tx);
+int xpose_band_int(cint m, cint n, cint kl, cint ku, const int *__restrict band, int *__restrict trans);
+int xpose_band_dbl(cint m, cint n, cint kl, cint ku, const double *__restrict band, double *__restrict trans);
 
 
 #ifdef __cplusplus

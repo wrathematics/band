@@ -26,11 +26,12 @@
 
 
 // Storage reference: http://www.netlib.org/lapack/lug/node124.html
+#include <cfloat>
+#include <cmath>
+
 #include "band.h"
 #include "indices.h"
 #include "types.h"
-#include <cfloat>
-#include <cmath>
 
 
 #define EPS 1000*FLT_EPSILON

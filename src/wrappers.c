@@ -201,7 +201,39 @@ SEXP R_matprinter(SEXP x, SEXP m_, SEXP n_, SEXP kl_, SEXP ku_)
 
 
 
-SEXP R_xposebanded(SEXP x, SEXP m_, SEXP n_, SEXP kl_, SEXP ku_)
+
+SEXP R_xpose_full(SEXP x)
+{
+  SEXP ret;
+  const int m = nrows(x);
+  const int n = ncols(x);
+  int check;
+  
+  switch (TYPEOF(x))
+  {
+    case REALSXP:
+      PROTECT(ret = allocMatrix(REALSXP, m, n));
+      check = xpose_full_dbl(m, n, REAL(x), REAL(ret));
+      break;
+    case INTSXP:
+      PROTECT(ret = allocMatrix(INTSXP, m, n));
+      check = xpose_full_int(m, n, INTEGER(x), INTEGER(ret));
+      break;
+    case LGLSXP:
+      PROTECT(ret = allocMatrix(LGLSXP, m, n));
+      check = xpose_full_int(m, n, LOGICAL(x), LOGICAL(ret));
+      break;
+    default:
+      error("bad type");
+  }
+  
+  UNPROTECT(1);
+  CHKRET(check);
+  
+  return ret;
+}
+
+SEXP R_xpose_band(SEXP x, SEXP m_, SEXP n_, SEXP kl_, SEXP ku_)
 {
   SEXP ret;
   const int m = INT(m_);
@@ -215,15 +247,15 @@ SEXP R_xposebanded(SEXP x, SEXP m_, SEXP n_, SEXP kl_, SEXP ku_)
   {
     case REALSXP:
       PROTECT(ret = allocVector(REALSXP, len));
-      check = xposebanded_dbl(m, n, kl, ku, REAL(x), REAL(ret));
+      check = xpose_band_dbl(m, n, kl, ku, REAL(x), REAL(ret));
       break;
     case INTSXP:
       PROTECT(ret = allocVector(INTSXP, len));
-      check = xposebanded_int(m, n, kl, ku, INTEGER(x), INTEGER(ret));
+      check = xpose_band_int(m, n, kl, ku, INTEGER(x), INTEGER(ret));
       break;
     case LGLSXP:
       PROTECT(ret = allocVector(LGLSXP, len));
-      check = xposebanded_int(m, n, kl, ku, LOGICAL(x), LOGICAL(ret));
+      check = xpose_band_int(m, n, kl, ku, LOGICAL(x), LOGICAL(ret));
       break;
     default:
       error("bad type");

@@ -16,7 +16,7 @@ xpose_BandMat <- function(x)
   dim <- getdim(x)
   k <- kdim(x)
   
-  out <- .Call(R_xposebanded, getData(x), dim[1L], dim[2L], k[1L], k[2L])
+  out <- .Call(R_xpose_band, getData(x), dim[1L], dim[2L], k[1L], k[2L])
   genbandmat(out, rev(dim), k[2L], k[1L])
 }
 
@@ -43,3 +43,19 @@ setMethod("t", signature(x="GenBandMat"), xpose_BandMat)
 #' @rdname xpose
 #' @export
 setMethod("t", signature(x="SymMat"), xpose_err)
+
+#' @rdname xpose
+#' @export
+setMethod("t", signature(x="matrix"), 
+  function(x)
+  {
+    dims <- dim(x)
+    if (any(dims == 1L))
+    {
+      dim(x) <- rev(dims)
+      return(x)
+    }
+    
+    .Call(R_xpose_full, x)
+  }
+)
