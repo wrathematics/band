@@ -12,5 +12,7 @@ buildVignette(){
   Rscript -e "rmarkdown::render('$1')"
 }
 
-buildVignette coop.Rmd
-buildVignette algos.Rmd
+buildVignette band.Rmd
+
+mv *.html ../inst/doc/
+cp *.Rmd ../inst/doc/
