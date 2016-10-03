@@ -2,11 +2,8 @@
 #' 
 #' Test if a matrix is symmetric.
 #' 
-#' @param object
+#' @param x
 #' A matrix-like object.
-#' 
-#' @param ...
-#' Ignored.
 #' 
 #' @return
 #' \code{TRUE} or \code{FALSE}, accordingly.

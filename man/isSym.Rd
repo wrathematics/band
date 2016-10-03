@@ -7,9 +7,7 @@
 isSym(x)
 }
 \arguments{
-\item{object}{A matrix-like object.}
-
-\item{...}{Ignored.}
+\item{x}{A matrix-like object.}
 }
 \value{
 \code{TRUE} or \code{FALSE}, accordingly.
