@@ -27,6 +27,9 @@
 #ifndef __BAND_LIB_H__
 #define __BAND_LIB_H__
 
+// TODO can check the line size...
+#define BLOCKSIZE 16
+
 
 #define INT(x) INTEGER(x)[0]
 #define CHARPT(x,i) ((char*)CHAR(STRING_ELT(x,i)))

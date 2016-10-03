@@ -50,15 +50,13 @@ static inline bool samenum(cdbl x, cdbl y)
 template <typename T>
 static inline bool isSym_full(const int n, const T *const x)
 {
-  const int blocksize = 16;
-  
-  for (int j=0; j<n; j+=blocksize)
+  for (int j=0; j<n; j+=BLOCKSIZE)
   {
-    for (int i=j; i<n; i+=blocksize)
+    for (int i=j; i<n; i+=BLOCKSIZE)
     {
-      for (int col=j; col<j+blocksize && col<n; ++col)
+      for (int col=j; col<j+BLOCKSIZE && col<n; ++col)
       {
-        for (int row=i; row<i+blocksize && row<n; ++row)
+        for (int row=i; row<i+BLOCKSIZE && row<n; ++row)
         {
           const bool check = samenum(x[col + n*row], x[row + n*col]);
           if (!check)
