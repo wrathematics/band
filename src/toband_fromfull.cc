@@ -26,7 +26,9 @@
 
 
 // Storage reference: http://www.netlib.org/lapack/lug/node124.html
+
 #include "band.h"
+
 #include "NA.hh"
 #include "omputils.h"
 #include "indices.h"

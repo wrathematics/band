@@ -1,9 +1,10 @@
 #ifndef __BAND_LIB_NA_H__
 #define __BAND_LIB_NA_H__
 
-#include "omputils.h"
-#include <stdint.h>
+
 #include <string.h>
+
+#include "omputils.h"
 
 
 static inline void initialize_na(double *x, const int len)

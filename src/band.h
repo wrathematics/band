@@ -27,6 +27,14 @@
 #ifndef __BAND_LIB_H__
 #define __BAND_LIB_H__
 
+
+// MUST COME FIRST
+#ifndef __STDC_LIMIT_MACROS
+#define __STDC_LIMIT_MACROS
+#endif
+#include <stdint.h>
+
+
 // TODO can check the line size...
 #define BLOCKSIZE 16
 
