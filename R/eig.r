@@ -38,5 +38,5 @@ eig.SymMat <- function(x, only.values=FALSE, descending=TRUE)
   data <- getData(x)
   storage.mode(data) <- "double"
   
-  .Call("R_eig_sympacked", data, n, triangle, only.values, descending)
+  .Call(R_eig_sympacked, data, n, triangle, only.values, descending)
 }
