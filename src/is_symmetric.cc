@@ -48,7 +48,33 @@ static inline bool samenum(cdbl x, cdbl y)
 
 
 template <typename T>
-bool is_symmetric(cint n, cint k, const T *band)
+static inline bool is_symmetric_mat(const int n, const T *const x)
+{
+  const int blocksize = 8; // TODO check cache line explicitly
+  
+  for (int j=0; j<n; j+=blocksize)
+  {
+    for (int i=j; i<n; i+=blocksize)
+    {
+      for (int col=j; col<j+blocksize && col<n; ++col)
+      {
+        for (int row=i; row<i+blocksize && row<n; ++row)
+        {
+          const bool check = samenum(x[col + n*row], x[row + n*col]);
+          if (!check)
+            return false;
+        }
+      }
+    }
+  }
+  
+  return true;
+}
+
+
+
+template <typename T>
+bool is_symmetric(cint n, cint k, const T *const band)
 {
   const int nr = tobanded_numrows(k, k, false);
   const int len = nr*n;
