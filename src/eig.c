@@ -59,10 +59,6 @@ static inline void reverse_mat(const int n, double *x, double *work)
 }
 
 // symmetric matrix in packed storage
-void dspev_(cchar_r jobz, cchar_r uplo, cint_r n, cdbl_r ap, dbl_r w, dbl_r z, cint_r ldz, dbl_r work, int_r info);
-
-
-
 SEXP R_eig_sympacked(SEXP x, SEXP n_, SEXP triangle_, SEXP onlyvals_, SEXP descending)
 {
   SEXP ret, retnames;
