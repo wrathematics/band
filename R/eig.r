@@ -1,3 +1,22 @@
+#' eig
+#' 
+#' Eigenvalue decomposition.
+#' 
+#' @details
+#' Runtime performance for a SymMat (symmetric packed matrix) will be
+#' MUCH slower than when using full (non-packed) storage.
+#' 
+#' @param x
+#' The input matrix.
+#' @param only.values
+#' Should only the eigenvalues be returned, or should the eigenvectors
+#' also be returned?
+#' @param descending
+#' Should the values/vectors be returned in descending order,
+#' or ascending order?  By default, LAPACK returns them in ascending
+#' order, so putting them in descending order (R's default in \code{eigen()})
+#' has a performance cost.
+#' 
 #' @export
 eig <- function(x, only.values=FALSE, descending=TRUE)
 {
