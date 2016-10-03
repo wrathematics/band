@@ -27,8 +27,8 @@
 
 #include <string.h>
 #include "band.h"
-#include "omputils.h"
 #include "indices.h"
+#include "safeomp.h"
 
 
 // Storage reference: http://www.netlib.org/lapack/lug/node124.html

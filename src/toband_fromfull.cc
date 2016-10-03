@@ -30,8 +30,8 @@
 #include "band.h"
 
 #include "NA.hh"
-#include "omputils.h"
 #include "indices.h"
+#include "safeomp.h"
 
 
 // ncols is always the same as the input

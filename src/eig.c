@@ -30,7 +30,7 @@
 #include <string.h>
 
 #include "band.h"
-#include "omputils.h"
+#include "safeomp.h"
 
 
 static inline void reverse(const int len, double *x)

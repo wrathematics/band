@@ -29,7 +29,7 @@
 
 #include "indices.h"
 #include "NA.hh"
-#include "omputils.h"
+#include "safeomp.h"
 #include "types.h"
 
 

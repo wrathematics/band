@@ -27,8 +27,8 @@
 
 #include <string.h>
 #include "band.h"
-#include "omputils.h"
 #include "indices.h"
+#include "safeomp.h"
 
 
 template <typename T>

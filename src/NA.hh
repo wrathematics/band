@@ -30,7 +30,7 @@
 
 #include <string.h>
 
-#include "omputils.h"
+#include "safeomp.h"
 
 
 static inline void initialize_na(double *x, const int len)
