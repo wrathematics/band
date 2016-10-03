@@ -44,8 +44,8 @@ extern "C" {
 #include "types.h"
 
 // is_symmetric
-bool is_symmetric_int(cint n, cint k, const int *__restrict band);
-bool is_symmetric_dbl(cint n, cint k, const double *__restrict band);
+bool isSym_band_int(cint n, cint k, const int *__restrict band);
+bool isSym_band_dbl(cint n, cint k, const double *__restrict band);
 
 // print
 void matprinter_int(cint m, cint n, cint kl, cint ku, cint *x);

@@ -237,7 +237,7 @@ SEXP R_xposebanded(SEXP x, SEXP m_, SEXP n_, SEXP kl_, SEXP ku_)
 
 
 
-SEXP R_is_symmetric(SEXP x, SEXP n_, SEXP k_)
+SEXP R_isSym_band(SEXP x, SEXP n_, SEXP k_)
 {
   SEXP ret;
   const int n = INT(n_);
@@ -247,13 +247,13 @@ SEXP R_is_symmetric(SEXP x, SEXP n_, SEXP k_)
   switch (TYPEOF(x))
   {
     case REALSXP:
-      retval = is_symmetric_dbl(n, k, REAL(x));
+      retval = isSym_band_dbl(n, k, REAL(x));
       break;
     case INTSXP:
-      retval = is_symmetric_int(n, k, INTEGER(x));
+      retval = isSym_band_int(n, k, INTEGER(x));
       break;
     case LGLSXP:
-      retval = is_symmetric_int(n, k, LOGICAL(x));
+      retval = isSym_band_int(n, k, LOGICAL(x));
       break;
     default:
       error("bad type");

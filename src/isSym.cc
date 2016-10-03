@@ -48,7 +48,7 @@ static inline bool samenum(cdbl x, cdbl y)
 
 
 template <typename T>
-static inline bool is_symmetric_mat(const int n, const T *const x)
+static inline bool isSym_full(const int n, const T *const x)
 {
   const int blocksize = 8; // TODO check cache line explicitly
   
@@ -74,7 +74,7 @@ static inline bool is_symmetric_mat(const int n, const T *const x)
 
 
 template <typename T>
-bool is_symmetric(cint n, cint k, const T *const band)
+bool isSym_band(cint n, cint k, const T *const band)
 {
   const int nr = tobanded_numrows(k, k, false);
   const int len = nr*n;
@@ -102,12 +102,12 @@ bool is_symmetric(cint n, cint k, const T *const band)
 
 
 // wrappers
-extern "C" bool is_symmetric_int(cint n, cint k, const int *__restrict band)
+extern "C" bool isSym_band_int(cint n, cint k, const int *__restrict band)
 {
-  return is_symmetric(n, k, band);
+  return isSym_band(n, k, band);
 }
 
-extern "C" bool is_symmetric_dbl(cint n, cint k, const double *__restrict band)
+extern "C" bool isSym_band_dbl(cint n, cint k, const double *__restrict band)
 {
-  return is_symmetric(n, k, band);
+  return isSym_band(n, k, band);
 }
