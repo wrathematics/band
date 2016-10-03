@@ -28,6 +28,11 @@
 #define __BAND_LIB_H__
 
 
+#define INT(x) INTEGER(x)[0]
+#define CHARPT(x,i) ((char*)CHAR(STRING_ELT(x,i)))
+#define CHKRET(ret) if(ret) error("something went wrong")
+
+
 #ifdef __cplusplus
 extern "C" {
 #else

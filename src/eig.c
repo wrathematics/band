@@ -28,12 +28,9 @@
 #include <R.h>
 #include <Rinternals.h>
 #include <string.h>
+
 #include "band.h"
 #include "omputils.h"
-
-
-#define INT(x) INTEGER(x)[0]
-#define CHARPT(x,i) ((char*)CHAR(STRING_ELT(x,i)))
 
 
 static inline void reverse(const int len, double *x)

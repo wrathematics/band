@@ -31,10 +31,6 @@
 #include "band.h"
 #include "indices.h"
 
-#define INT(x) INTEGER(x)[0]
-#define CHARPT(x,i) ((char*)CHAR(STRING_ELT(x,i)))
-#define CHKRET(ret) if(ret) error("something went wrong")
-
 
 SEXP R_tobanded(SEXP x, SEXP kl_, SEXP ku_)
 {
