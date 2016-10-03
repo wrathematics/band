@@ -44,6 +44,8 @@ extern "C" {
 #include "types.h"
 
 // is_symmetric
+bool isSym_full_int(cint n, const int *__restrict x);
+bool isSym_full_dbl(cint n, const double *__restrict x);
 bool isSym_band_int(cint n, cint k, const int *__restrict band);
 bool isSym_band_dbl(cint n, cint k, const double *__restrict band);
 

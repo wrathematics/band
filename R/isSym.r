@@ -12,7 +12,7 @@
 #' \code{TRUE} or \code{FALSE}, accordingly.
 #' 
 #' @export
-isSym <- function(x) useMethod("isSym")
+isSym <- function(x) UseMethod("isSym", x)
 
 dimseq <- function(x)
 {
@@ -44,4 +44,10 @@ isSym.GenBandMat <- function(x)
     return(FALSE)
   
   .Call(R_isSym_band, getData(x), dims[1L], k[1L])
+}
+
+#' @export
+isSym.matrix <- function(x)
+{
+  .Call(R_isSym_full, x)
 }

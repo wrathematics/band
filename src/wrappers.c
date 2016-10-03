@@ -265,3 +265,36 @@ SEXP R_isSym_band(SEXP x, SEXP n_, SEXP k_)
   
   return ret;
 }
+
+
+
+SEXP R_isSym_full(SEXP x)
+{
+  SEXP ret;
+  const int n = nrows(x);
+  int retval;
+  
+  if (n != ncols(x))
+    return ScalarLogical(false);
+  
+  switch (TYPEOF(x))
+  {
+    case REALSXP:
+      retval = isSym_full_dbl(n, REAL(x));
+      break;
+    case INTSXP:
+      retval = isSym_full_int(n, INTEGER(x));
+      break;
+    case LGLSXP:
+      retval = isSym_full_int(n, LOGICAL(x));
+      break;
+    default:
+      error("bad type");
+  }
+  
+  PROTECT(ret = allocVector(LGLSXP, 1));
+  LOGICAL(ret)[0] = retval;
+  UNPROTECT(1);
+  
+  return ret;
+}

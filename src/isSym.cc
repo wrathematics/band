@@ -50,7 +50,7 @@ static inline bool samenum(cdbl x, cdbl y)
 template <typename T>
 static inline bool isSym_full(const int n, const T *const x)
 {
-  const int blocksize = 8; // TODO check cache line explicitly
+  const int blocksize = 16;
   
   for (int j=0; j<n; j+=blocksize)
   {
@@ -69,6 +69,16 @@ static inline bool isSym_full(const int n, const T *const x)
   }
   
   return true;
+}
+
+extern "C" bool isSym_full_int(cint n, const int *__restrict x)
+{
+  return isSym_full(n, x);
+}
+
+extern "C" bool isSym_full_dbl(cint n, const double *__restrict x)
+{
+  return isSym_full(n, x);
 }
 
 
@@ -99,9 +109,6 @@ bool isSym_band(cint n, cint k, const T *const band)
   return true;
 }
 
-
-
-// wrappers
 extern "C" bool isSym_band_int(cint n, cint k, const int *__restrict band)
 {
   return isSym_band(n, k, band);
