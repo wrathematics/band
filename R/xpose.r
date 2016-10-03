@@ -1,6 +1,11 @@
 #' xpose
 #' 
-#' Transpose a matrix-like thing.
+#' Transpose a matrix-like thing. In addition to supporting
+#' the new classes, this method is slightly more efficient
+#' than R's \code{t()} for matrix types.
+#' 
+#' @details
+#' For a matrix input, we use a block algorithm.
 #' 
 #' @param x
 #' A banded matrix.

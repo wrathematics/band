@@ -16,7 +16,12 @@ xpose(x)
 A matrix-like object of the same type as the input.
 }
 \description{
-Transpose a matrix-like thing.
+Transpose a matrix-like thing. In addition to supporting
+the new classes, this method is slightly more efficient
+than R's \code{t()} for matrix types.
+}
+\details{
+For a matrix input, we use a block algorithm.
 }
 \keyword{LinAlg}
 

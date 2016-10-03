@@ -18,8 +18,8 @@ A symmetric matrix.
 }
 \description{
 Convert a regular R matrix into a packed symmetric matrix, whether or not
-the input matrix was symmetric. Test for symmetry with R's
-\code{isSymmetric()}.
+the input matrix was symmetric. Test for symmetry with \code{band::isSym()}
+and NOT R's \code{isSymmetric()}.
 }
 \details{
 The storage scheme is packed symmetric storage, so only the diagonal and
@@ -38,7 +38,7 @@ as.symmetric(x, 'l')
 \url{http://www.netlib.org/lapack/lug/node123.html}
 }
 \seealso{
-\code{\link{kdim}} and \code{\link{classes}}
+\code{\link{isSym}}, \code{\link{kdim}}, and \code{\link{classes}}
 }
 \keyword{Casters}
 

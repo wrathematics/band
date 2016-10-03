@@ -13,6 +13,11 @@ isSym(x)
 \code{TRUE} or \code{FALSE}, accordingly.
 }
 \description{
-Test if a matrix is symmetric.
+Test if a matrix-like object is symmetric.  In addition to supporting
+the new classes, this method is SIGNIFICANTLY more efficient
+than R's \code{isSymmetric()} for matrix types.
+}
+\details{
+For a matrix input, we use a block algorithm.
 }
 
