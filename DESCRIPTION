@@ -8,10 +8,6 @@ Depends:
     R (>= 3.1.0)
 Imports:
     methods
-Suggests:
-    knitr,
-    rmarkdown
-VignetteBuilder: knitr
 NeedsCompilation: yes
 ByteCompile: yes
 URL: https://github.com/wrathematics/band
