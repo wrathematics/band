@@ -22,10 +22,12 @@ The list of currently implemented methods is:
 | Description | Functions |
 |-------------|---------- |
 | Casters | `as.banded()`, `as.matrix()`, `as.symmetric()` |
-| Checks | `isSymmetric()` | 
-| Transpose | `t()` |
+| Checks | `isSym()` | 
+| Transpose | `xpose()` |
 
 Note that attempting to transpose a zero, diagonal, or symmetric matrix will produce an error *because these are already their own transpose* and there is no good reason to create a copy.
+
+Finally, we include optimized versions of `xpose()` and `isSym()` for regular R matrices.
 
 
 
