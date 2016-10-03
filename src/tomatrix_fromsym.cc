@@ -34,8 +34,6 @@
 template <typename T>
 static int symm_u(cint n, T *__restrict full, const T *__restrict sym)
 {
-  const int len = TRIANGLESUM(n);
-  
   for (int j=0; j<n; j++)
   {
     const int nj = n*j;
@@ -57,7 +55,6 @@ template <typename T>
 static int symm_l(cint n, T *__restrict full, const T *__restrict sym)
 {
   const int n2 = n*2;
-  const int len = TRIANGLESUM(n);
   
   for (int j=1; j<=n; j++)
   {

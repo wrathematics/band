@@ -41,8 +41,6 @@ int xposebanded(cint m, cint n, cint kl, cint ku, const T *__restrict band, T *_
   
   for (int j=0; j<n; j++)
   {
-    const int nj = n*j;
-    const int nrj = nr*j;
     const int imin = ind_imin(m, j, kl, ku);
     const int imax = ind_imax(m, j, kl, ku);
     

@@ -87,12 +87,9 @@ template <typename T>
 bool isSym_band(cint n, cint k, const T *const band)
 {
   const int nr = tobanded_numrows(k, k, false);
-  const int len = nr*n;
   
   for (int j=0; j<n; j++)
   {
-    const int nj = n*j;
-    const int nrj = nr*j;
     const int imin = MAX(ind_imin(n, j, k, k), j+1);
     const int imax = ind_imax(n, j, k, k);
     

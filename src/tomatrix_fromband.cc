@@ -54,14 +54,12 @@ template <typename T>
 static inline int mat_gen(cint m, cint n, cint kl, cint ku, T *__restrict gen, const T *__restrict band)
 {
   const int nr = tobanded_numrows(kl, ku, false);
-  const int len = nr*n;
   
   memset(gen, 0, m*n*sizeof(T));
   
   for (int j=0; j<n; j++)
   {
     const int mj = m*j;
-    const int nrj = nr*j;
     const int imin = ind_imin(m, j, kl, ku);
     const int imax = ind_imax(m, j, kl, ku);
     

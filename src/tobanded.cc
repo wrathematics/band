@@ -69,7 +69,6 @@ static inline int banded_gen(cint m, cint n, cint kl, cint ku, const T *__restri
   for (int j=0; j<n; j++)
   {
     const int mj = m*j;
-    const int nrj = nr*j;
     const int imin = ind_imin(m, j, kl, ku);
     const int imax = ind_imax(m, j, kl, ku);
     
