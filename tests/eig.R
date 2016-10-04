@@ -37,3 +37,16 @@ x <- as.matrix(sym)
 truth <- eigen(x)
 test <- eig(x)
 tester(test, truth)
+
+
+
+
+
+
+
+n <- 11
+mat <- matrix(rnorm(n*n), n, n)
+x <- as.matrix(as.symmetric(mat))
+truth <- eigen(x)
+test <- eig(x)
+tester(test, truth)
