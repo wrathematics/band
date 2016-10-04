@@ -31,34 +31,11 @@
 
 #include "band.h"
 
-#include "lapack.h"
-#include "safeomp.h"
+#include "utils/lapack.h"
+#include "utils/rev.h"
+#include "utils/safeomp.h"
 
 
-static inline void reverse(const int len, double *x)
-{
-  int j = len-1;
-  for (int i=0; i<len/2; i++)
-  {
-    const double tmp = x[i];
-    x[i] = x[j];
-    x[j] = tmp;
-    j--;
-  }
-}
-
-// work is at least length n
-static inline void reverse_mat(const int n, double *x, double *work)
-{
-  int last = n-1;
-  for (int j=0; j<n/2; j++)
-  {
-    memcpy(work, x + n*j, n*sizeof(*work));
-    memcpy(x + n*j, x + n*last, n*sizeof(*work));
-    memcpy(x + n*last, work, n*sizeof(*work));
-    last--;
-  }
-}
 
 static inline SEXP setret(SEXP values, SEXP vectors)
 {
@@ -87,7 +64,6 @@ static inline int eig_sym_dnc(const bool inplace, const bool only_values, const 
 {
   int info = 0;
   double *x_cp;
-  // Passed to Fortran
   double worksize;
   int lwork, liwork;
   int *iwork;
@@ -113,7 +89,13 @@ static inline int eig_sym_dnc(const bool inplace, const bool only_values, const 
   
   lwork = (int) worksize;
   work = malloc(lwork * sizeof(*work));
+  CHECKMALLOC(work);
   iwork = malloc(liwork * sizeof(*iwork));
+  if (iwork == NULL)
+  {
+    free(work);
+    return BAND_BADMALLOC;
+  }
   
   dsyevd_(&jobz, &(char){'U'}, &n, x_cp, &n, values, work, &lwork, iwork, &liwork, &info);
   
@@ -126,12 +108,13 @@ static inline int eig_sym_dnc(const bool inplace, const bool only_values, const 
 
 
 
+#if 0
 // relatively robust representations
 static inline int eig_sym_rrr(const bool inplace, const bool only_values, const int n, double *restrict x, double *restrict values, double *restrict vectors)
 {
-  int info = 0;
+  char jobz;
+  int info;
   double *x_cp;
-  // Passed to Fortran
   double worksize;
   int lwork, liwork;
   int *iwork;
@@ -139,57 +122,102 @@ static inline int eig_sym_rrr(const bool inplace, const bool only_values, const 
   
   
   if (inplace)
-    x_cp = x;
-  else
   {
-    memcpy(vectors, x, n*n*sizeof(double));
-    x_cp = vectors;
+    x_cp = malloc(n*n * sizeof(*x_cp));
+    memcpy(x_cp, x, n*n*sizeof(double));
+    CHECKMALLOC(x_cp);
   }
-  
-  
-  char jobz;
+  else
+    x_cp = x;
   
   if (only_values)
     jobz = 'N';
   else
     jobz = 'V';
   
+  
   // dsyevr_(&jobz, &(char){'A'}, &(char){'U'}, &n, x_cp, &n, 
   //   &(double){0.0}, &(double){0.0}, &(int){0}, &(int){0}, &(double){0.0}, 
   //   m, w, z, ldz, isuppz, &worksize, &(int){-1}, &liwork, &(int){-1}, &info);
+  // 
   // lwork = (int) worksize;
   // work = malloc(lwork * sizeof(*work));
+  // if (work == NULL)
+  // {
+  //   info = BAND_BADMALLOC;
+  //   goto cleanup;
+  // }
+  // 
   // iwork = malloc(liwork * sizeof(*iwork));
-  // dsyevr_(jobz, range, uplo, n, a, lda, vl, vu, il, iu, abstol, m, w, z, ldz, isuppz, work, &lwork, iwork, &liwork, &info);
+  // if (iwork == NULL)
+  // {
+  //   free(work);
+  //   info = BAND_BADMALLOC;
+  //   goto cleanup;
+  // }
+  // 
+  // dsyevr_(&jobz, &(char){'A'}, &(char){'U'}, &n, x_cp, &n, 
+  //   &(double){0.0}, &(double){0.0}, &(int){0}, &(int){0}, &(double){0.0}, 
+  //   m, w, z, ldz, isuppz, &worksize, &(int){-1}, &liwork, &(int){-1}, &info);
+  
   
   free(work);
   free(iwork);
+cleanup:
+  if (inplace)
+    free(x_cp);
   
   return info;
 }
+
 
 
 
 static inline int eig_nonsym(const bool inplace, const bool only_values, const int n, double *restrict x, double *restrict values, double *restrict vectors)
 {
+  char jobvl = 'n', jobvr;
   int info = 0;
+  double *x_cp;
+  double worksize;
+  int lwork;
+  double *work;
   
-  error("not done yet");
+  if (only_values)
+    jobvr = 'v';
+  else
+    jobvr = 'n';
   
-  // char jobvl = 'n', jobvr;
-  // 
-  // if (only_values)
-  //   jobvr = 'v';
-  // else
-  //   jobvr = 'n';
-  // 
-  // dgeev_(jobvl, jobvr, &n, x, &m, wr, wi, vl, ldvl, vr, ldvr, work, lwork, info);
-  // dgeev_(jobvl, jobvr, n, a, lda, wr, wi, vl, ldvl, vr, ldvr, work, &neg1, info);
+  if (inplace)
+  {
+    x_cp = malloc(n*n * sizeof(*x_cp));
+    memcpy(x_cp, x, n*n*sizeof(double));
+    CHECKMALLOC(x_cp);
+  }
+  else
+    x_cp = x;
+  
+  dgeev_(jobvl, jobvr, &n, x, &m, wr, wi, vl, ldvl, vr, ldvr, work, lwork, info);
+  
+  lwork = (int) worksize;
+  malloc()
+  
+  dgeev_(jobvl, jobvr, n, a, lda, wr, wi, vl, ldvl, vr, ldvr, work, &neg1, info);
+  
+  
+  free(work);
+  free(iwork);
+cleanup:
+  if (inplace)
+    free(x_cp);
   
   return info;
 }
+#endif
 
-
+static inline int eig_nonsym(const bool inplace, const bool only_values, const int n, double *restrict x, double *restrict values, double *restrict vectors)
+{
+  return 0;
+}
 
 static inline int eig(const bool inplace, const bool only_values, const bool symmetric, const int n, double *restrict x, double *restrict values, double *restrict vectors)
 {
@@ -237,13 +265,9 @@ SEXP R_eig_full(SEXP x, SEXP symmetric_, SEXP onlyvals_, SEXP descending)
   
   if (INT(descending))
   {
-    reverse(n, values_ptr);
-    
+    reverse_vec(n, values_ptr);
     if (!onlyvals)
-    {
-      double *work = (double*) R_alloc(n, sizeof(*work));
-      reverse_mat(n, vectors_ptr, work);
-    }
+      reverse_mat(n, n, vectors_ptr);
   }
   
   ret = setret(values, vectors);
@@ -258,6 +282,7 @@ SEXP R_eig_full(SEXP x, SEXP symmetric_, SEXP onlyvals_, SEXP descending)
 // ----------------------------------------------------------------------------
 // symmetric matrix in packed storage
 // ----------------------------------------------------------------------------
+
 SEXP R_eig_sympacked(SEXP x, SEXP n_, SEXP triangle_, SEXP onlyvals_, SEXP descending)
 {
   SEXP ret, values, vectors;
@@ -300,9 +325,9 @@ SEXP R_eig_sympacked(SEXP x, SEXP n_, SEXP triangle_, SEXP onlyvals_, SEXP desce
   
   if (INT(descending))
   {
-    reverse(n, values_ptr);
+    reverse_vec(n, values_ptr);
     if (!onlyvals)
-      reverse_mat(n, vectors_ptr, work);
+      reverse_mat(n, n, vectors_ptr);
   }
   
   ret = setret(values, vectors);
