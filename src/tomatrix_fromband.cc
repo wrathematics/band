@@ -26,9 +26,11 @@
 
 
 #include <string.h>
+
 #include "band.h"
-#include "indices.h"
-#include "safeomp.h"
+
+#include "utils/indices.h"
+#include "utils/safeomp.h"
 
 
 // Storage reference: http://www.netlib.org/lapack/lug/node124.html
@@ -78,7 +80,7 @@ template <typename T>
 int tomatrix_fromband(cint m, cint n, cint kl, cint ku, T *__restrict gen, const T *__restrict band)
 {
   if (kl < 0 || ku < 0)
-    return INVALID_KDIMS;
+    return BAND_BADKDIMS;
   else if (kl == 0 && ku == 0)
     return mat_diag(m, n, gen, band);
   else

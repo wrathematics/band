@@ -29,7 +29,7 @@
 #include <Rinternals.h>
 
 #include "band.h"
-#include "indices.h"
+#include "utils/indices.h"
 
 #define TYPE_ERR error("data must be numeric (int, double) or logical")
 

@@ -29,9 +29,10 @@
 
 #include "band.h"
 
-#include "NA.hh"
-#include "indices.h"
-#include "safeomp.h"
+#include "utils/NA.hh"
+
+#include "utils/indices.h"
+#include "utils/safeomp.h"
 
 
 // ncols is always the same as the input
@@ -89,7 +90,7 @@ template <typename T>
 int tobanded(cint m, cint n, cint kl, cint ku, const T *gen, T *band)
 {
   if (kl < 0 || ku < 0)
-    return INVALID_KDIMS;
+    return BAND_BADKDIMS;
   else if (kl == 0 && ku == 0)
     return banded_diag(m, n, gen, band);
   else

@@ -27,10 +27,11 @@
 
 #include "band.h"
 
-#include "indices.h"
-#include "NA.hh"
-#include "safeomp.h"
-#include "types.h"
+#include "utils/NA.hh"
+
+#include "utils/indices.h"
+#include "utils/safeomp.h"
+#include "utils/types.h"
 
 
 template <typename T>

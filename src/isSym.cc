@@ -30,8 +30,8 @@
 #include <cmath>
 
 #include "band.h"
-#include "indices.h"
-#include "types.h"
+#include "utils/indices.h"
+#include "utils/types.h"
 
 
 #define EPS 1000*FLT_EPSILON

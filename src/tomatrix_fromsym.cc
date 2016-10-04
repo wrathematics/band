@@ -26,9 +26,11 @@
 
 
 #include <string.h>
+
 #include "band.h"
-#include "indices.h"
-#include "safeomp.h"
+
+#include "utils/indices.h"
+#include "utils/safeomp.h"
 
 
 template <typename T>
