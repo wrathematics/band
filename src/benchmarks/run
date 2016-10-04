@@ -1,0 +1,10 @@
+#!/bin/sh
+
+runBenchmarks(){
+  for exe in `ls bin/`;do
+    echo ""
+    ./bin/$exe
+  done
+}
+
+make && runBenchmarks
