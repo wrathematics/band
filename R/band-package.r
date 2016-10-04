@@ -10,7 +10,7 @@
 #' R_matprinter, 
 #' R_xpose_band, R_xpose_full,
 #' R_isSym_band, R_isSym_full, 
-#' R_eig_sympacked
+#' R_eig_sympacked, R_eig_full
 #' 
 #' @docType package
 #' @name band-package

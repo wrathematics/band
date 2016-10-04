@@ -40,3 +40,15 @@ eig.SymMat <- function(x, only.values=FALSE, descending=TRUE)
   
   .Call(R_eig_sympacked, data, n, triangle, only.values, descending)
 }
+
+
+#' @export
+eig.matrix <- function(x, only.values=FALSE, descending=TRUE)
+{
+  if (!is.double(x))
+    storage.mode(x) <- "double"
+  
+  symmetric <- isSym(x)
+  
+  .Call(R_eig_full, x, symmetric, only.values, descending)
+}

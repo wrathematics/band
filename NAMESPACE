@@ -2,6 +2,7 @@
 
 S3method(eig,SymMat)
 S3method(eig,default)
+S3method(eig,matrix)
 S3method(isSym,DiagMat)
 S3method(isSym,GenBandMat)
 S3method(isSym,SymMat)
@@ -30,4 +31,4 @@ exportClasses(ZeroMat)
 exportMethods("*")
 exportMethods(as.matrix)
 import(methods)
-useDynLib(band, R_tobanded, R_tomatrix_fromband, R_tomatrix_fromsym, R_tosymmetric, R_matprinter, R_xpose_band, R_xpose_full, R_isSym_band, R_isSym_full, R_eig_sympacked)
+useDynLib(band, R_tobanded, R_tomatrix_fromband, R_tomatrix_fromsym, R_tosymmetric, R_matprinter, R_xpose_band, R_xpose_full, R_isSym_band, R_isSym_full, R_eig_sympacked, R_eig_full)
