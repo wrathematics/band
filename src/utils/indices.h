@@ -2,10 +2,9 @@
 #define __BAND_LIB_INDICES_H__
 
 
+#include "cdefs.h"
 #include "types.h"
 
-#define MIN(a,b) (a<b?a:b)
-#define MAX(a,b) (a>b?a:b)
 
 #define TRIANGLESUM(n) (n*(n+1))/2
 

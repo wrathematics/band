@@ -34,9 +34,7 @@
 #endif
 #include <stdint.h>
 
-
-// TODO can check the line size...
-#define BLOCKSIZE 16
+#include "utils/cdefs.h"
 
 
 #define INT(x) INTEGER(x)[0]
@@ -50,9 +48,7 @@ extern "C" {
 #include <stdbool.h>
 #endif
 
-#define INVALID_KDIMS -1
-
-#include "types.h"
+#include "utils/types.h"
 
 // is_symmetric
 bool isSym_full_int(cint n, const int *__restrict x);

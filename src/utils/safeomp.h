@@ -66,6 +66,8 @@
   #elif _OPENMP >= 200805
     #define OMP_VER_3
   #endif
+#else
+  static inline int omp_get_thread_num(){return 0;}
 #endif
 
 
