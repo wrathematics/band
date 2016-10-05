@@ -56,4 +56,3 @@ static inline void initialize_na(int *x, const int len)
 
 
 #endif
-#endif
