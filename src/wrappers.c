@@ -212,15 +212,15 @@ SEXP R_xpose_full(SEXP x)
   switch (TYPEOF(x))
   {
     case REALSXP:
-      PROTECT(ret = allocMatrix(REALSXP, m, n));
+      PROTECT(ret = allocMatrix(REALSXP, n, m));
       check = xpose_full_dbl(m, n, REAL(x), REAL(ret));
       break;
     case INTSXP:
-      PROTECT(ret = allocMatrix(INTSXP, m, n));
+      PROTECT(ret = allocMatrix(INTSXP, n, m));
       check = xpose_full_int(m, n, INTEGER(x), INTEGER(ret));
       break;
     case LGLSXP:
-      PROTECT(ret = allocMatrix(LGLSXP, m, n));
+      PROTECT(ret = allocMatrix(LGLSXP, n, m));
       check = xpose_full_int(m, n, LOGICAL(x), LOGICAL(ret));
       break;
     default:
