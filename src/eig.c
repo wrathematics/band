@@ -291,7 +291,9 @@ static SEXP R_eig_nonsym_full(SEXP x, SEXP onlyvals_, SEXP descending)
   values_ptr = REAL(values);
   
   
-  // info = eig_nonsym(inplace, only_values, n, x, cplx_t *restrict values, cplx_t *restrict vectors)
+  // FIXME
+  // info = eig_nonsym(inplace, only_values, n, x, cplx_t *restrict values, cplx_t *restrict vectors);
+  info = 0;
   
   if (info != 0)
     error("LAPACK function dgeev() returned info=%d\n", info);
