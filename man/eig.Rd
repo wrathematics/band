@@ -17,6 +17,9 @@ or ascending order?  By default, LAPACK returns them in ascending
 order, so putting them in descending order (R's default in \code{eigen()})
 has a performance cost.}
 }
+\value{
+A matrix-like object of the same type as the input.
+}
 \description{
 Eigenvalue decomposition.
 }

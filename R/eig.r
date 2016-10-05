@@ -17,6 +17,9 @@
 #' order, so putting them in descending order (R's default in \code{eigen()})
 #' has a performance cost.
 #' 
+#' @return
+#' A matrix-like object of the same type as the input.
+#' 
 #' @export
 eig <- function(x, only.values=FALSE, descending=TRUE)
 {
