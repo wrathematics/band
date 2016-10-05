@@ -35,7 +35,7 @@
 
 
 template <typename T>
-int xpose_full(const int m, const int n, const T *const __restrict x, T *const __restrict tx)
+int xpose_full(cint m, cint n, const T *const restrict x, T *const restrict tx)
 {
   #pragma omp parallel for default(none) schedule(dynamic, 1) if(m*n>OMP_MIN_SIZE)
   for (int j=0; j<n; j+=BLOCKSIZE)
@@ -54,12 +54,12 @@ int xpose_full(const int m, const int n, const T *const __restrict x, T *const _
   return 0;
 }
 
-extern "C" int xpose_full_int(cint m, cint n, const int *__restrict x, int *const __restrict tx)
+extern "C" int xpose_full_int(cint m, cint n, cint_r x, int_r tx)
 {
   return xpose_full(m, n, x, tx);
 }
 
-extern "C" int xpose_full_dbl(cint m, cint n, const double *__restrict x, double *const __restrict tx)
+extern "C" int xpose_full_dbl(cint m, cint n, cdbl_r x, dbl_r tx)
 {
   return xpose_full(m, n, x, tx);
 }
@@ -68,7 +68,7 @@ extern "C" int xpose_full_dbl(cint m, cint n, const double *__restrict x, double
 
 
 template <typename T>
-int xpose_band(cint m, cint n, cint kl, cint ku, const T *__restrict band, T *__restrict trans)
+int xpose_band(cint m, cint n, cint kl, cint ku, const T *const restrict band, T *const restrict trans)
 {
   const int nr = tobanded_numrows(kl, ku, false);
   const int len = nr*n;
@@ -92,12 +92,12 @@ int xpose_band(cint m, cint n, cint kl, cint ku, const T *__restrict band, T *__
   return 0;
 }
 
-extern "C" int xpose_band_int(cint m, cint n, cint kl, cint ku, const int *__restrict band, int *__restrict trans)
+extern "C" int xpose_band_int(cint m, cint n, cint kl, cint ku, cint_r band, int_r trans)
 {
   return xpose_band(m, n, kl, ku, band, trans);
 }
 
-extern "C" int xpose_band_dbl(cint m, cint n, cint kl, cint ku, const double *__restrict band, double *__restrict trans)
+extern "C" int xpose_band_dbl(cint m, cint n, cint kl, cint ku, cdbl_r band, dbl_r trans)
 {
   return xpose_band(m, n, kl, ku, band, trans);
 }

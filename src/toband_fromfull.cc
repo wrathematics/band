@@ -47,7 +47,7 @@ extern "C" int tobanded_numrows(cint kl, cint ku, cbool symmetric)
 
 
 template <typename T>
-static inline int banded_diag(cint m, cint n, const T *__restrict gen, T *__restrict band)
+static inline int banded_diag(cint m, cint n, const T *const restrict gen, T *const restrict band)
 {
   int ind_band = 0;
   
@@ -62,7 +62,7 @@ static inline int banded_diag(cint m, cint n, const T *__restrict gen, T *__rest
 
 
 template <typename T>
-static inline int banded_gen(cint m, cint n, cint kl, cint ku, const T *__restrict gen, T *__restrict band)
+static inline int banded_gen(cint m, cint n, cint kl, cint ku, const T *const restrict gen, T *const restrict band)
 {
   const int nr = tobanded_numrows(kl, ku, false);
   const int len = nr*n;
@@ -87,7 +87,7 @@ return 0;
 
 // interface
 template <typename T>
-int tobanded(cint m, cint n, cint kl, cint ku, const T *gen, T *band)
+int tobanded(cint m, cint n, cint kl, cint ku, const T *const restrict gen, T *const restrict band)
 {
   if (kl < 0 || ku < 0)
     return BAND_BADKDIMS;
@@ -100,12 +100,12 @@ int tobanded(cint m, cint n, cint kl, cint ku, const T *gen, T *band)
 
 
 // wrappers
-extern "C" int tobanded_int(cint m, cint n, cint kl, cint ku, const int *__restrict gen, int *__restrict band)
+extern "C" int tobanded_int(cint m, cint n, cint kl, cint ku, cint_r gen, int_r band)
 {
   return tobanded(m, n, kl, ku, gen, band);
 }
 
-extern "C" int tobanded_dbl(cint m, cint n, cint kl, cint ku, const double *__restrict gen, double *__restrict band)
+extern "C" int tobanded_dbl(cint m, cint n, cint kl, cint ku, cdbl_r gen, dbl_r band)
 {
   return tobanded(m, n, kl, ku, gen, band);
 }

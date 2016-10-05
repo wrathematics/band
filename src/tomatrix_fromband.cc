@@ -35,7 +35,7 @@
 
 // Storage reference: http://www.netlib.org/lapack/lug/node124.html
 template <typename T>
-static inline int mat_diag(cint m, cint n, T *__restrict gen, const T *__restrict band)
+static inline int mat_diag(cint m, cint n, T *const restrict gen, const T *const restrict band)
 {
   int ind_band = 0;
   
@@ -53,7 +53,7 @@ static inline int mat_diag(cint m, cint n, T *__restrict gen, const T *__restric
 
 
 template <typename T>
-static inline int mat_gen(cint m, cint n, cint kl, cint ku, T *__restrict gen, const T *__restrict band)
+static inline int mat_gen(cint m, cint n, cint kl, cint ku, T *const restrict gen, const T *const restrict band)
 {
   const int nr = tobanded_numrows(kl, ku, false);
   
@@ -77,7 +77,7 @@ static inline int mat_gen(cint m, cint n, cint kl, cint ku, T *__restrict gen, c
 
 // interface
 template <typename T>
-int tomatrix_fromband(cint m, cint n, cint kl, cint ku, T *__restrict gen, const T *__restrict band)
+int tomatrix_fromband(cint m, cint n, cint kl, cint ku, T *const restrict gen, const T *const restrict band)
 {
   if (kl < 0 || ku < 0)
     return BAND_BADKDIMS;
@@ -92,12 +92,12 @@ int tomatrix_fromband(cint m, cint n, cint kl, cint ku, T *__restrict gen, const
 
 
 // wrappers
-extern "C" int tomatrix_fromband_int(cint m, cint n, cint kl, cint ku, int *__restrict gen, const int *__restrict band)
+extern "C" int tomatrix_fromband_int(cint m, cint n, cint kl, cint ku, int_r gen, cint_r band)
 {
   return tomatrix_fromband(m, n, kl, ku, gen, band);
 }
 
-extern "C" int tomatrix_fromband_dbl(cint m, cint n, cint kl, cint ku, double *__restrict gen, const double *__restrict band)
+extern "C" int tomatrix_fromband_dbl(cint m, cint n, cint kl, cint ku, dbl_r gen, cdbl_r band)
 {
   return tomatrix_fromband(m, n, kl, ku, gen, band);
 }

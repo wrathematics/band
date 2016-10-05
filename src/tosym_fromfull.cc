@@ -35,7 +35,7 @@
 
 
 template <typename T>
-static int symm_u(cint n, const T *__restrict full, T *__restrict sym)
+static int symm_u(cint n, const T *const restrict full, T *const restrict sym)
 {
   for (int j=0; j<n; j++)
   {
@@ -51,7 +51,7 @@ static int symm_u(cint n, const T *__restrict full, T *__restrict sym)
 #include <stdio.h>
 
 template <typename T>
-static int symm_l(cint n, const T *__restrict full, T *__restrict sym)
+static int symm_l(cint n, const T *const restrict full, T *const restrict sym)
 {
   const int n2 = n*2;
   
@@ -66,7 +66,7 @@ static int symm_l(cint n, const T *__restrict full, T *__restrict sym)
 }
 
 template <typename T>
-int tosymmetric(cint n, cchar triangle, const T *__restrict full, T *__restrict sym)
+int tosymmetric(cint n, cchar triangle, const T *const restrict full, T *const restrict sym)
 {
   if (triangle == 'U' || triangle == 'u')
     return symm_u(n, full, sym);
@@ -79,12 +79,12 @@ int tosymmetric(cint n, cchar triangle, const T *__restrict full, T *__restrict 
 
 
 // wrappers
-extern "C" int tosymmetric_int(cint n, cchar triangle, const int *__restrict full, int *__restrict sym)
+extern "C" int tosymmetric_int(cint n, cchar triangle, cint_r full, int_r sym)
 {
   return tosymmetric(n, triangle, full, sym);
 }
 
-extern "C" int tosymmetric_dbl(cint n, cchar triangle, const double *__restrict full, double *__restrict sym)
+extern "C" int tosymmetric_dbl(cint n, cchar triangle, cdbl_r full, dbl_r sym)
 {
   return tosymmetric(n, triangle, full, sym);
 }

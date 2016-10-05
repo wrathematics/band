@@ -1,20 +1,21 @@
 #ifndef __BAND_LIB_TYPES_H__
 #define __BAND_LIB_TYPES_H__
 
+#include "../config.h"
 
-typedef const bool cbool;
-typedef const char cchar;
-typedef const int cint;
-typedef const double cdbl;
+typedef const bool    cbool;
+typedef const char    cchar;
+typedef const int     cint;
+typedef const double  cdbl;
 
-typedef char *__restrict char_r;
-typedef const char *const __restrict cchar_r;
+typedef char *const restrict char_r;
+typedef const char *const restrict cchar_r;
 
-typedef int *__restrict int_r;
-typedef const int *const __restrict cint_r;
+typedef int *const restrict int_r;
+typedef const int *const restrict cint_r;
 
-typedef double *__restrict dbl_r;
-typedef const double *const __restrict cdbl_r;
+typedef double *const restrict dbl_r;
+typedef const double *const restrict cdbl_r;
 
 
 #endif

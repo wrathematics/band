@@ -49,7 +49,7 @@ static inline bool samenum(cdbl x, cdbl y)
 
 
 template <typename T>
-static inline bool isSym_full(const int n, const T *const x)
+static inline bool isSym_full(cint n, const T *const restrict x)
 {
   for (int j=0; j<n; j+=BLOCKSIZE)
   {
@@ -70,12 +70,12 @@ static inline bool isSym_full(const int n, const T *const x)
   return true;
 }
 
-extern "C" bool isSym_full_int(cint n, const int *__restrict x)
+extern "C" bool isSym_full_int(cint n, cint_r x)
 {
   return isSym_full(n, x);
 }
 
-extern "C" bool isSym_full_dbl(cint n, const double *__restrict x)
+extern "C" bool isSym_full_dbl(cint n, cdbl_r x)
 {
   return isSym_full(n, x);
 }
@@ -83,7 +83,7 @@ extern "C" bool isSym_full_dbl(cint n, const double *__restrict x)
 
 
 template <typename T>
-bool isSym_band(cint n, cint k, const T *const band)
+bool isSym_band(cint n, cint k, const T *const restrict band)
 {
   const int nr = tobanded_numrows(k, k, false);
   
@@ -105,12 +105,12 @@ bool isSym_band(cint n, cint k, const T *const band)
   return true;
 }
 
-extern "C" bool isSym_band_int(cint n, cint k, const int *__restrict band)
+extern "C" bool isSym_band_int(cint n, cint k, cint_r band)
 {
   return isSym_band(n, k, band);
 }
 
-extern "C" bool isSym_band_dbl(cint n, cint k, const double *__restrict band)
+extern "C" bool isSym_band_dbl(cint n, cint k, cdbl_r band)
 {
   return isSym_band(n, k, band);
 }

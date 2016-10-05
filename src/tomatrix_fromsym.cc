@@ -34,7 +34,7 @@
 
 
 template <typename T>
-static int symm_u(cint n, T *__restrict full, const T *__restrict sym)
+static int symm_u(cint n, T *const restrict full, const T *const restrict sym)
 {
   for (int j=0; j<n; j++)
   {
@@ -54,7 +54,7 @@ static int symm_u(cint n, T *__restrict full, const T *__restrict sym)
 }
 
 template <typename T>
-static int symm_l(cint n, T *__restrict full, const T *__restrict sym)
+static int symm_l(cint n, T *const restrict full, const T *const restrict sym)
 {
   const int n2 = n*2;
   
@@ -76,7 +76,7 @@ static int symm_l(cint n, T *__restrict full, const T *__restrict sym)
 }
 
 template <typename T>
-int tomatrix_fromsym(cint n, cchar triangle, T *__restrict full, const T *__restrict sym)
+int tomatrix_fromsym(cint n, cchar triangle, T *const restrict full, const T *const restrict sym)
 {
   if (triangle == 'U' || triangle == 'u')
     return symm_u(n, full, sym);
@@ -89,12 +89,12 @@ int tomatrix_fromsym(cint n, cchar triangle, T *__restrict full, const T *__rest
 
 
 // wrappers
-extern "C" int tomatrix_fromsym_int(cint n, cchar triangle, int *__restrict full, const int *__restrict sym)
+extern "C" int tomatrix_fromsym_int(cint n, cchar triangle, int_r full, cint_r sym)
 {
   return tomatrix_fromsym(n, triangle, full, sym);
 }
 
-extern "C" int tomatrix_fromsym_dbl(cint n, cchar triangle, double *__restrict full, const double *__restrict sym)
+extern "C" int tomatrix_fromsym_dbl(cint n, cchar triangle, dbl_r full, cdbl_r sym)
 {
   return tomatrix_fromsym(n, triangle, full, sym);
 }

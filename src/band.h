@@ -51,38 +51,38 @@ extern "C" {
 #include "utils/types.h"
 
 // is_symmetric
-bool isSym_full_int(cint n, const int *__restrict x);
-bool isSym_full_dbl(cint n, const double *__restrict x);
-bool isSym_band_int(cint n, cint k, const int *__restrict band);
-bool isSym_band_dbl(cint n, cint k, const double *__restrict band);
+bool isSym_full_int(cint n, cint_r x);
+bool isSym_full_dbl(cint n, cdbl_r x);
+bool isSym_band_int(cint n, cint k, cint_r band);
+bool isSym_band_dbl(cint n, cint k, cdbl_r band);
 
 // print
 void matprinter_int(cint m, cint n, cint kl, cint ku, cint *x);
 void matprinter_dbl(cint m, cint n, cint kl, cint ku, cdbl *x);
 
-// tobanded
-int tobanded_int(cint m, cint n, cint kl, cint ku, const int *__restrict gen, int *__restrict band);
-int tobanded_dbl(cint m, cint n, cint kl, cint ku, const double *__restrict gen, double *__restrict band);
+// toband_fromfull
+int tobanded_int(cint m, cint n, cint kl, cint ku, cint_r gen, int_r band);
+int tobanded_dbl(cint m, cint n, cint kl, cint ku, cdbl_r gen, dbl_r band);
 
 int tobanded_numrows(cint kl, cint ku, cbool symmetric);
 
-// symmetric
-int tosymmetric_int(cint n, cchar tiangle, const int *__restrict full, int *__restrict sym);
-int tosymmetric_dbl(cint n, cchar triangle, const double *__restrict full, double *__restrict sym);
-
 // tomatrix_fromband
-int tomatrix_fromband_int(cint m, cint n, cint kl, cint ku, int *__restrict gen, const int *__restrict band);
-int tomatrix_fromband_dbl(cint m, cint n, cint kl, cint ku, double *__restrict gen, const double *__restrict band);
+int tomatrix_fromband_int(cint m, cint n, cint kl, cint ku, int_r gen, cint_r band);
+int tomatrix_fromband_dbl(cint m, cint n, cint kl, cint ku, dbl_r gen, cdbl_r band);
 
 // tomatrix_fromsym
-int tomatrix_fromsym_int(cint n, cchar triangle, int *__restrict full, const int *__restrict sym);
-int tomatrix_fromsym_dbl(cint n, cchar triangle, double *__restrict full, const double *__restrict sym);
+int tomatrix_fromsym_int(cint n, cchar triangle, int_r full, cint_r sym);
+int tomatrix_fromsym_dbl(cint n, cchar triangle, dbl_r full, cdbl_r sym);
+
+// tosym_fromfull
+int tosymmetric_int(cint n, cchar tiangle, cint_r full, int_r sym);
+int tosymmetric_dbl(cint n, cchar triangle, cdbl_r full, dbl_r sym);
 
 // transpose
-int xpose_full_int(cint m, cint n, const int *__restrict x, int *__restrict tx);
-int xpose_full_dbl(cint m, cint n, const double *__restrict x, double *__restrict tx);
-int xpose_band_int(cint m, cint n, cint kl, cint ku, const int *__restrict band, int *__restrict trans);
-int xpose_band_dbl(cint m, cint n, cint kl, cint ku, const double *__restrict band, double *__restrict trans);
+int xpose_full_int(cint m, cint n, cint_r x, int_r tx);
+int xpose_full_dbl(cint m, cint n, cdbl_r x, dbl_r tx);
+int xpose_band_int(cint m, cint n, cint kl, cint ku, cint_r band, int_r trans);
+int xpose_band_dbl(cint m, cint n, cint kl, cint ku, cdbl_r band, dbl_r trans);
 
 
 #ifdef __cplusplus
