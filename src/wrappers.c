@@ -31,7 +31,7 @@
 #include "band.h"
 #include "utils/indices.h"
 
-#define TYPE_ERR error("data must be numeric (int, double) or logical")
+#define THROW_TYPE_ERR error("data must be numeric (int, double) or logical")
 
 
 SEXP R_tobanded(SEXP x, SEXP kl_, SEXP ku_)
@@ -59,7 +59,7 @@ SEXP R_tobanded(SEXP x, SEXP kl_, SEXP ku_)
       check = tobanded_int(m, n, kl, ku, LOGICAL(x), LOGICAL(ret));
       break;
     default:
-      TYPE_ERR;
+      THROW_TYPE_ERR;
   }
   
   UNPROTECT(1);
@@ -97,7 +97,7 @@ SEXP R_tosymmetric(SEXP x, SEXP triangle_)
       check = tosymmetric_int(n, triangle, LOGICAL(x), LOGICAL(ret));
       break;
     default:
-      TYPE_ERR;
+      THROW_TYPE_ERR;
   }
   
   UNPROTECT(1);
@@ -132,7 +132,7 @@ SEXP R_tomatrix_fromband(SEXP x, SEXP m_, SEXP n_, SEXP kl_, SEXP ku_)
       check = tomatrix_fromband_int(m, n, kl, ku, LOGICAL(ret), LOGICAL(x));
       break;
     default:
-      TYPE_ERR;
+      THROW_TYPE_ERR;
   }
   
   UNPROTECT(1);
@@ -165,7 +165,7 @@ SEXP R_tomatrix_fromsym(SEXP x, SEXP n_, SEXP triangle_)
       check = tomatrix_fromsym_int(n, triangle, LOGICAL(ret), LOGICAL(x));
       break;
     default:
-      TYPE_ERR;
+      THROW_TYPE_ERR;
   }
   
   UNPROTECT(1);
@@ -193,7 +193,7 @@ SEXP R_matprinter(SEXP x, SEXP m_, SEXP n_, SEXP kl_, SEXP ku_)
       matprinter_int(m, n, kl, ku, INTEGER(x));
       break;
     default:
-      TYPE_ERR;
+      THROW_TYPE_ERR;
   }
   
   return R_NilValue;
@@ -224,7 +224,7 @@ SEXP R_xpose_full(SEXP x)
       check = xpose_full_int(m, n, LOGICAL(x), LOGICAL(ret));
       break;
     default:
-      TYPE_ERR;
+      THROW_TYPE_ERR;
   }
   
   UNPROTECT(1);
@@ -258,7 +258,7 @@ SEXP R_xpose_band(SEXP x, SEXP m_, SEXP n_, SEXP kl_, SEXP ku_)
       check = xpose_band_int(m, n, kl, ku, LOGICAL(x), LOGICAL(ret));
       break;
     default:
-      TYPE_ERR;
+      THROW_TYPE_ERR;
   }
   
   UNPROTECT(1);
@@ -285,7 +285,7 @@ SEXP R_isSym_band(SEXP x, SEXP n_, SEXP k_)
       retval = isSym_band_int(n, k, INTEGER(x));
       break;
     default:
-      TYPE_ERR;
+      THROW_TYPE_ERR;
   }
   
   return ScalarLogical(retval);
@@ -311,7 +311,7 @@ SEXP R_isSym_full(SEXP x)
       retval = isSym_full_int(n, INTEGER(x));
       break;
     default:
-      TYPE_ERR;
+      THROW_TYPE_ERR;
   }
   
   return ScalarLogical(retval);
