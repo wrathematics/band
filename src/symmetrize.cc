@@ -25,8 +25,6 @@
 */
 
 
-#include "band.h"
-
 #include "utils/cdefs.h"
 #include "utils/indices.h"
 #include "utils/safeomp.h"

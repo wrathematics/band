@@ -27,8 +27,6 @@
 
 #include <string.h>
 
-#include "band.h"
-
 #include "utils/indices.h"
 #include "utils/safeomp.h"
 

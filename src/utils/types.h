@@ -3,6 +3,10 @@
 
 #include "../config.h"
 
+#ifndef __cplusplus
+#include <stdbool.h>
+#endif
+
 typedef const bool    cbool;
 typedef const char    cchar;
 typedef const int     cint;

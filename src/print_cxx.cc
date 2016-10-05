@@ -25,11 +25,12 @@
 */
 
 
-#include "band.h"
-
 // If wanting to use outside of R, delete these headers and change macro to printf
 #include <R.h>
 #include <Rinternals.h>
+
+#include "utils/types.h"
+
 #define PRINTFUN Rprintf
 // end of non-portable stuff
 
