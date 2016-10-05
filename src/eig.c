@@ -108,7 +108,6 @@ static inline int eig_sym_dnc(const bool inplace, const bool only_values, const 
 
 
 
-#if 0
 // relatively robust representations
 static inline int eig_sym_rrr(const bool inplace, const bool only_values, const int n, double *restrict x, double *restrict values, double *restrict vectors)
 {
@@ -169,10 +168,10 @@ cleanup:
   
   return info;
 }
-#endif
 
 
 
+/*
 typedef struct {
   double *restrict r;
   double *restrict i;
@@ -216,6 +215,7 @@ cleanup:
   
   return info;
 }
+*/
 
 
 
@@ -265,6 +265,7 @@ static SEXP R_eig_sym_full(SEXP x, SEXP onlyvals_, SEXP descending)
 
 
 
+/*
 static SEXP R_eig_nonsym_full(SEXP x, SEXP onlyvals_, SEXP descending)
 {
   SEXP ret, values, vectors;
@@ -309,6 +310,11 @@ static SEXP R_eig_nonsym_full(SEXP x, SEXP onlyvals_, SEXP descending)
   
   UNPROTECT(ptct);
   return ret;
+}
+*/
+static SEXP R_eig_nonsym_full(SEXP x, SEXP onlyvals_, SEXP descending)
+{
+  error("not yet implemented for non-symmetric matrices\n");
 }
 
 
