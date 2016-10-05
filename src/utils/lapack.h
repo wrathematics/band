@@ -10,16 +10,24 @@
 // void dtbmv_(cchar_r uplo, cchar_r trans, cchar_r diag, cint_r n, cint_r k, cdbl_r a, cint_r lda, cdbl_r x, cint_r incx);
 
 
+// -----------------------------------------------------------------------------
+// eigen problems
+// -----------------------------------------------------------------------------
+
 // divide and conquer method; slower than ?syevr
-void dsyevd_(cchar_r jobz, cchar_r uplo, cint_r n, double* a, cint_r lda, double* w, double *work, int *lwork, int *iwork, int *liwork, int *info);
+void dsyevd_(cchar_r, cchar_r, cint_r, double*, cint_r, double*, double*, int *,
+  int*, int*, int*);
 // relatively robust representations.
-void dsyevr_(cchar_r jobz, cchar_r range, cchar_r uplo, cint_r n, double *a, 
-  cint_r lda, cdbl_r vl, cdbl_r vu, cint_r il, cint_r iu, cdbl_r abstol, 
-  cint_r m, double *w, double *z, cint_r ldz, int *isuppz, double *work, 
-  int *lwork, int *iwork, int *liwork, int *info);
+void dsyevr_(cchar_r, cchar_r, cchar_r, cint_r, double*, cint_r, cdbl_r, cdbl_r,
+  cint_r, cint_r, cdbl_r, cint_r, double*, double*, cint_r, int*, double*, int*,
+  int*, int*, int*);
+
+// non-symmetric
+void dgeev_(cchar_r, cchar_r, cint_r, double*, cint_r, double*, double*, double*,
+  cint_r, double*, cint_r, double*, cint_r, int*);
 
 // symmetric packed eigen
-void dspev_(cchar_r jobz, cchar_r uplo, cint_r n, cdbl_r ap, dbl_r w, dbl_r z, cint_r ldz, dbl_r work, int_r info);
+void dspev_(cchar_r, cchar_r, cint_r, cdbl_r, dbl_r, dbl_r, cint_r, dbl_r, int_r);
 
 
 #endif

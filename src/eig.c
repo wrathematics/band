@@ -169,11 +169,16 @@ cleanup:
   
   return info;
 }
+#endif
 
 
 
+typedef struct {
+  double *restrict r;
+  double *restrict i;
+} cplx_t;
 
-static inline int eig_nonsym(const bool inplace, const bool only_values, const int n, double *restrict x, double *restrict values, double *restrict vectors)
+static inline int eig_nonsym(const bool inplace, const bool only_values, const int n, double *restrict x, cplx_t *restrict values, cplx_t *restrict vectors)
 {
   char jobvl = 'n', jobvr;
   int info = 0;
@@ -196,51 +201,32 @@ static inline int eig_nonsym(const bool inplace, const bool only_values, const i
   else
     x_cp = x;
   
-  dgeev_(jobvl, jobvr, &n, x, &m, wr, wi, vl, ldvl, vr, ldvr, work, lwork, info);
+  dgeev_(&jobvl, &jobvr, &n, x, &n, values->r, values->i, vectors->r, &n, vectors->i, &n, &worksize, &(int){-1}, &info);
   
   lwork = (int) worksize;
-  malloc()
+  work = malloc(lwork * sizeof(*work));
   
-  dgeev_(jobvl, jobvr, n, a, lda, wr, wi, vl, ldvl, vr, ldvr, work, &neg1, info);
+  dgeev_(&jobvl, &jobvr, &n, x, &n, values->r, values->i, vectors->r, &n, vectors->i, &n, work, &lwork, &info);
   
   
   free(work);
-  free(iwork);
 cleanup:
   if (inplace)
     free(x_cp);
   
   return info;
 }
-#endif
-
-static inline int eig_nonsym(const bool inplace, const bool only_values, const int n, double *restrict x, double *restrict values, double *restrict vectors)
-{
-  return 0;
-}
-
-static inline int eig(const bool inplace, const bool only_values, const bool symmetric, const int n, double *restrict x, double *restrict values, double *restrict vectors)
-{
-  if (symmetric)
-    return eig_sym_dnc(inplace, only_values, n, x, values, vectors);
-  else
-    return eig_nonsym(inplace, only_values, n, x, values, vectors);
-}
 
 
 
-SEXP R_eig_full(SEXP x, SEXP symmetric_, SEXP onlyvals_, SEXP descending)
+static SEXP R_eig_sym_full(SEXP x, SEXP onlyvals_, SEXP descending)
 {
   SEXP ret, values, vectors;
   const int n = nrows(x);
-  const int symmetric = INT(symmetric_);
   const int onlyvals = INT(onlyvals_);
   int ptct;
   double *values_ptr, *vectors_ptr;
   int info;
-  
-  if (n != ncols(x))
-    error("argument 'x' is non-square");
   
   if (onlyvals)
   {
@@ -259,9 +245,10 @@ SEXP R_eig_full(SEXP x, SEXP symmetric_, SEXP onlyvals_, SEXP descending)
   values_ptr = REAL(values);
   
   
-  info = eig(false, onlyvals, symmetric, n, REAL(x), values_ptr, vectors_ptr);
-  // if (info != 0)
-  //   error("LAPACK function dspev() returned info=%d\n", info);
+  info = eig_sym_dnc(false, onlyvals, n, REAL(x), values_ptr, vectors_ptr);
+  
+  if (info != 0)
+    error("LAPACK function dsyevd() returned info=%d\n", info);
   
   if (INT(descending))
   {
@@ -274,7 +261,69 @@ SEXP R_eig_full(SEXP x, SEXP symmetric_, SEXP onlyvals_, SEXP descending)
   
   UNPROTECT(ptct);
   return ret;
+}
 
+
+
+static SEXP R_eig_nonsym_full(SEXP x, SEXP onlyvals_, SEXP descending)
+{
+  SEXP ret, values, vectors;
+  const int n = nrows(x);
+  const int onlyvals = INT(onlyvals_);
+  int ptct;
+  double *values_ptr, *vectors_ptr;
+  int info;
+  
+  if (onlyvals)
+  {
+    vectors = R_NilValue;
+    vectors_ptr = NULL;
+    ptct = 3;
+  }
+  else
+  {
+    PROTECT(vectors = allocMatrix(REALSXP, n, n));
+    vectors_ptr = REAL(vectors);
+    ptct = 4;
+  }
+  
+  PROTECT(values = allocVector(REALSXP, n));
+  values_ptr = REAL(values);
+  
+  
+  // info = eig_nonsym(inplace, only_values, n, x, cplx_t *restrict values, cplx_t *restrict vectors)
+  
+  if (info != 0)
+    error("LAPACK function dgeev() returned info=%d\n", info);
+  
+  if (INT(descending))
+  {
+    reverse_vec(n, values_ptr);
+    if (!onlyvals)
+      reverse_mat(n, n, vectors_ptr);
+  }
+  
+  ret = setret(values, vectors);
+  
+  UNPROTECT(ptct);
+  return ret;
+}
+
+
+
+SEXP R_eig_full(SEXP x, SEXP onlyvals_, SEXP descending)
+{
+  const int n = nrows(x);
+  
+  if (n != ncols(x))
+    error("argument 'x' is non-square");
+  
+  bool symmetric = isSym_full_dbl(n, REAL(x));
+  
+  if (symmetric)
+    return R_eig_sym_full(x, onlyvals_, descending);
+  else
+    return R_eig_nonsym_full(x, onlyvals_, descending);
 }
 
 
