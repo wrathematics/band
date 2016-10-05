@@ -19,14 +19,8 @@ xpose <- function(x) UseMethod("xpose", x)
 
 xpose_err <- function(x)
 {
-  if (class(x) == "ZeroMat")
-    nm <- "zero"
-  else if (class(x) == "DiagMat")
-    nm <- "diagonal"
-  else if (class(x) == "SymMat")
-    nm <- "symmetric"
-  
-  stop(paste("a", nm, "matrix is its own transpose"))
+  if (class(x) == "ZeroMat" || class(x) == "DiagMat" || class(x) == "SymMat")
+    stop(paste("a", class(x), "matrix is its own transpose"))
 }
 
 #' @export
