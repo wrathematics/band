@@ -29,9 +29,23 @@
 #include <Rinternals.h>
 
 #include "band.h"
+#include "utils/cdefs.h"
 #include "utils/indices.h"
 
 #define THROW_TYPE_ERR error("data must be numeric (int, double) or logical")
+
+static inline int triang_char2int(const char c)
+{
+  if (c == 'u')
+    return TRIANG_UPPER;
+  else if (c == 'l')
+    return TRIANG_LOWER;
+  else
+    error("invalid triangle\n");
+}
+
+
+
 
 
 SEXP R_tobanded(SEXP x, SEXP kl_, SEXP ku_)
@@ -63,7 +77,7 @@ SEXP R_tobanded(SEXP x, SEXP kl_, SEXP ku_)
   }
   
   UNPROTECT(1);
-  CHKRET(check);
+  RCHECKRET(check);
   
   return ret;
 }
@@ -101,7 +115,7 @@ SEXP R_tosymmetric(SEXP x, SEXP triangle_)
   }
   
   UNPROTECT(1);
-  CHKRET(check);
+  RCHECKRET(check);
   
   return ret;
 }
@@ -136,7 +150,7 @@ SEXP R_tomatrix_fromband(SEXP x, SEXP m_, SEXP n_, SEXP kl_, SEXP ku_)
   }
   
   UNPROTECT(1);
-  CHKRET(check);
+  RCHECKRET(check);
   
   return ret;
 }
@@ -169,7 +183,7 @@ SEXP R_tomatrix_fromsym(SEXP x, SEXP n_, SEXP triangle_)
   }
   
   UNPROTECT(1);
-  CHKRET(check);
+  RCHECKRET(check);
   
   return ret;
 }
@@ -228,7 +242,7 @@ SEXP R_xpose_full(SEXP x)
   }
   
   UNPROTECT(1);
-  CHKRET(check);
+  RCHECKRET(check);
   
   return ret;
 }
@@ -262,7 +276,7 @@ SEXP R_xpose_band(SEXP x, SEXP m_, SEXP n_, SEXP kl_, SEXP ku_)
   }
   
   UNPROTECT(1);
-  CHKRET(check);
+  RCHECKRET(check);
   
   return ret;
 }
@@ -315,4 +329,41 @@ SEXP R_isSym_full(SEXP x)
   }
   
   return ScalarLogical(retval);
+}
+
+
+
+SEXP R_symmetrize(SEXP x, SEXP triangle_)
+{
+  SEXP ret;
+  const int m = nrows(x);
+  const int n = ncols(x);
+  const int triangle = triang_char2int(CHARPT(triangle_, 0)[0]);
+  int check;
+  
+  if (m < n)
+    error("nrows < ncols; not enough information to symmetrize");
+  
+  switch (TYPEOF(x))
+  {
+    case REALSXP:
+      PROTECT(ret = allocMatrix(REALSXP, n, n));
+      check = symmetrize_full_dbl(triangle, m, n, REAL(x), REAL(ret));
+      break;
+    case INTSXP:
+      PROTECT(ret = allocMatrix(INTSXP, n, n));
+      check = symmetrize_full_int(triangle, m, n, INTEGER(x), INTEGER(ret));
+      break;
+    case LGLSXP:
+      PROTECT(ret = allocMatrix(LGLSXP, n, n));
+      check = symmetrize_full_int(triangle, m, n, LOGICAL(x), LOGICAL(ret));
+      break;
+    default:
+      THROW_TYPE_ERR;
+  }
+  
+  UNPROTECT(1);
+  RCHECKRET(check);
+  
+  return ret;
 }

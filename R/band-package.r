@@ -7,6 +7,7 @@
 #' 
 #' @useDynLib band,
 #' R_tobanded, R_tomatrix_fromband, R_tomatrix_fromsym, R_tosymmetric, 
+#' R_symmetrize, 
 #' R_matprinter, 
 #' R_xpose_band, R_xpose_full,
 #' R_isSym_band, R_isSym_full, 
