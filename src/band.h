@@ -39,7 +39,7 @@
 
 #define INT(x) INTEGER(x)[0]
 #define CHARPT(x,i) ((char*)CHAR(STRING_ELT(x,i)))
-#define CHKRET(ret) if(ret) error("something went wrong")
+#define RCHECKRET(ret) if(ret) error("something went wrong")
 
 
 #ifdef __cplusplus
@@ -59,6 +59,10 @@ bool isSym_band_dbl(cint n, cint k, cdbl_r band);
 // print
 void matprinter_int(cint m, cint n, cint kl, cint ku, cint *x);
 void matprinter_dbl(cint m, cint n, cint kl, cint ku, cdbl *x);
+
+// symmetrize
+int symmetrize_full_int(cint triang, cint m, cint n, cint_r x, int_r s);
+int symmetrize_full_dbl(cint triang, cint m, cint n, cdbl_r x, dbl_r s);
 
 // toband_fromfull
 int tobanded_int(cint m, cint n, cint kl, cint ku, cint_r gen, int_r band);
