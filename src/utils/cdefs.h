@@ -34,6 +34,9 @@
 #define BAND_BADMALLOC -1
 #define BAND_BADKDIMS  -2
 
+#define TRIANG_UPPER 0
+#define TRIANG_LOWER 1
+
 #define EPSILON 1e-10
 
 
