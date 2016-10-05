@@ -3,7 +3,11 @@
 *.html
 *.swp
 
+*.status
+
 src/*.o
 src/*.so
 
 inst/doc/*
+
+src/config.h

@@ -6,3 +6,5 @@ rm -rf ./src/*.d
 rm -rf ./src/*.dll
 
 rm -rf ./src/benchmarks/bin/*
+
+rm -rf ./src/config.h
