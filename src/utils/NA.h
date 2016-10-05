@@ -27,7 +27,12 @@
 #ifndef __BAND_LIB_NA_H__
 #define __BAND_LIB_NA_H__
 
+// MUST COME FIRST
+#ifndef __STDC_LIMIT_MACROS
+#define __STDC_LIMIT_MACROS
+#endif
 #include <stdint.h>
+
 #include <string.h>
 
 #include "safeomp.h"
@@ -50,4 +55,5 @@ static inline void initialize_na(int *x, const int len)
 }
 
 
+#endif
 #endif
