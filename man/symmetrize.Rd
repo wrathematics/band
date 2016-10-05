@@ -4,7 +4,7 @@
 \alias{symmetrize}
 \title{symmetrize}
 \usage{
-symmetrize(x, triangle = "u", checkdims = FALSE)
+symmetrize(x, triangle = "u")
 }
 \arguments{
 \item{x}{A matrix-like object.}
