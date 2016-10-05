@@ -117,10 +117,12 @@ static inline int eig_sym_rrr(const bool inplace, const bool only_values, const 
   double worksize;
   int lwork, liwork;
   int *iwork;
+  int *vec_support;
   double *work;
+  int nfound;
   
   
-  if (inplace)
+  if (!inplace)
   {
     x_cp = malloc(n*n * sizeof(*x_cp));
     memcpy(x_cp, x, n*n*sizeof(double));
@@ -134,32 +136,37 @@ static inline int eig_sym_rrr(const bool inplace, const bool only_values, const 
   else
     jobz = 'V';
   
+  vec_support = malloc(2*n * sizeof(*vec_support));
+  // TODO check malloc
   
-  // dsyevr_(&jobz, &(char){'A'}, &(char){'U'}, &n, x_cp, &n, 
-  //   &(double){0.0}, &(double){0.0}, &(int){0}, &(int){0}, &(double){0.0}, 
-  //   m, w, z, ldz, isuppz, &worksize, &(int){-1}, &liwork, &(int){-1}, &info);
-  // 
-  // lwork = (int) worksize;
-  // work = malloc(lwork * sizeof(*work));
-  // if (work == NULL)
-  // {
-  //   info = BAND_BADMALLOC;
-  //   goto cleanup;
-  // }
-  // 
-  // iwork = malloc(liwork * sizeof(*iwork));
-  // if (iwork == NULL)
-  // {
-  //   free(work);
-  //   info = BAND_BADMALLOC;
-  //   goto cleanup;
-  // }
-  // 
-  // dsyevr_(&jobz, &(char){'A'}, &(char){'U'}, &n, x_cp, &n, 
-  //   &(double){0.0}, &(double){0.0}, &(int){0}, &(int){0}, &(double){0.0}, 
-  //   m, w, z, ldz, isuppz, &worksize, &(int){-1}, &liwork, &(int){-1}, &info);
+  dsyevr_(&jobz, &(char){'A'}, &(char){'U'}, &n, x_cp, &n, 
+    &(double){0.0}, &(double){0.0}, &(int){0}, &(int){0}, &(double){0.0}, 
+    &nfound, values, vectors, &n, vec_support, &worksize, &(int){-1}, &liwork,
+    &(int){-1}, &info);
+  
+  lwork = (int) worksize;
+  work = malloc(lwork * sizeof(*work));
+  if (work == NULL)
+  {
+    info = BAND_BADMALLOC;
+    goto cleanup;
+  }
+  
+  iwork = malloc(liwork * sizeof(*iwork));
+  if (iwork == NULL)
+  {
+    free(work);
+    info = BAND_BADMALLOC;
+    goto cleanup;
+  }
+  
+  dsyevr_(&jobz, &(char){'A'}, &(char){'U'}, &n, x_cp, &n, 
+    &(double){0.0}, &(double){0.0}, &(int){0}, &(int){0}, &(double){0.0}, 
+    &nfound, values, vectors, &n, vec_support, work, &lwork, iwork,
+    &liwork, &info);
   
   
+  free(vec_support);
   free(work);
   free(iwork);
 cleanup:
