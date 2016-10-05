@@ -35,7 +35,7 @@
 
 
 template <typename T>
-int xpose_full(cint m, cint n, const T *const restrict x, T *const restrict tx)
+static inline int xpose_full(cint m, cint n, const T *const restrict x, T *const restrict tx)
 {
   #pragma omp parallel for default(none) schedule(dynamic, 1) if(m*n>OMP_MIN_SIZE)
   for (int j=0; j<n; j+=BLOCKSIZE)
@@ -68,7 +68,7 @@ extern "C" int xpose_full_dbl(cint m, cint n, cdbl_r x, dbl_r tx)
 
 
 template <typename T>
-int xpose_band(cint m, cint n, cint kl, cint ku, const T *const restrict band, T *const restrict trans)
+static inline int xpose_band(cint m, cint n, cint kl, cint ku, const T *const restrict band, T *const restrict trans)
 {
   const int nr = tobanded_numrows(kl, ku, false);
   const int len = nr*n;

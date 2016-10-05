@@ -83,7 +83,7 @@ extern "C" bool isSym_full_dbl(cint n, cdbl_r x)
 
 
 template <typename T>
-bool isSym_band(cint n, cint k, const T *const restrict band)
+static inline bool isSym_band(cint n, cint k, const T *const restrict band)
 {
   const int nr = tobanded_numrows(k, k, false);
   
