@@ -27,9 +27,8 @@
 #ifndef __BAND_LIB_NA_H__
 #define __BAND_LIB_NA_H__
 
-
-#include <string.h>
 #include <stdint.h>
+#include <string.h>
 
 #include "safeomp.h"
 

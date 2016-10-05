@@ -27,9 +27,8 @@
 
 #include "band.h"
 
-#include "utils/NA.hh"
-
 #include "utils/indices.h"
+#include "utils/NA.h"
 #include "utils/safeomp.h"
 #include "utils/types.h"
 

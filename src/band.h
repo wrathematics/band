@@ -28,12 +28,6 @@
 #define __BAND_LIB_H__
 
 
-// MUST COME FIRST
-#ifndef __STDC_LIMIT_MACROS
-#define __STDC_LIMIT_MACROS
-#endif
-#include <stdint.h>
-
 #include "utils/cdefs.h"
 
 

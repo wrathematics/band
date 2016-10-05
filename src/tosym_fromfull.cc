@@ -26,9 +26,8 @@
 
 
 // Storage reference: http://www.netlib.org/lapack/lug/node124.html
-#include "utils/NA.hh"
-
 #include "utils/indices.h"
+#include "utils/NA.h"
 #include "utils/safeomp.h"
 
 
