@@ -42,6 +42,9 @@ xpose.GenBandMat <- function(x)
 #' @export
 xpose.matrix <- function(x)
 {
+  if (!is.numeric(x) && !is.logical(x))
+    stop("argument 'x' must contain numeric, integer, or logical data")
+  
   dims <- dim(x)
   if (any(dims == 1L))
   {

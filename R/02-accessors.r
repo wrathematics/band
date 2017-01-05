@@ -58,11 +58,13 @@ kdim <- function(x)
     c(0L, 0L)
   else if (class(x) == "ZeroMat")
     c(-1L, -1L)
-  else stop("'x' must be a band matrix")
+  else
+    stop("'x' must be a band matrix")
 }
 
 
 
+# TODO
 # Prefer not to export this, because someone will likely do something crazy with it
 setGeneric("setData<-", 
   function(x, value) 
@@ -73,7 +75,7 @@ setGeneric("setData<-",
 setMethod("setData<-", signature(x="BandMat", value="VecTypes"), 
   function(x, value)
   {
-    x@Data <- value
-    x
+    x@Data[!is.na(x)] <- value
+    invisible()
   }
 )

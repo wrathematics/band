@@ -34,8 +34,7 @@
 #' @export
 as.banded <- function(x, kl, ku)
 {
-  if (!is.matrix(x))
-    stop("argument 'x' must be a matrix")
+  check.is.matrix(x)
   if (!is.numeric(x) && !is.logical(x))
     stop("argument 'x' must contain numeric, integer, or logical data")
   

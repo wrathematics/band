@@ -32,13 +32,11 @@
 #' @export
 as.symmetric <- function(x, triangle="u")
 {
-  if (!is.matrix(x))
-    stop("argument 'x' must be a matrix")
+  check.is.matrix(x)
   if (!is.numeric(x) && !is.logical(x))
     stop("argument 'x' must contain numeric, integer, or logical data")
   
-  if (!is.character(triangle) || length(triangle) != 1 || nchar(triangle) != 1)
-    stop("argument 'triangle' must be a single character")
+  check.is.char(triangle)
   
   triangle <- tolower(triangle)
   if (triangle != "u" && triangle != "l")
