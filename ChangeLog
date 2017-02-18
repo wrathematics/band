@@ -5,3 +5,5 @@ Release 0.1-0 (//):
   * Added support for packed symmetric matrices via SymMat; add casters.
   * Added isSym().
   * Added xpose().
+  * Added vignette.
+  * Registered native routines.
