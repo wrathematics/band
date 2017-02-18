@@ -1,0 +1,103 @@
+%\VignetteIndexEntry{Introducing band: Banded Matrices for R}
+\documentclass[]{article}
+
+
+\input{./include/settings}
+
+
+\mytitle{Introducing band: Banded Matrices for R}
+\mysubtitle{}
+\myversion{0.1-0}
+\myauthor{
+\centering
+Drew Schmidt \\ 
+\texttt{wrathematics@gmail.com} 
+}
+
+
+\begin{document}
+\makefirstfew
+
+
+
+\section{Introduction}\label{introduction}
+
+The \textbf{band} package~\cite{band,bandguide} does 
+
+When building/using this package, you will see the biggest performance
+improvements, in decreasing order of value, by using:
+
+\begin{enumerate}
+\item
+  A good \textbf{BLAS} library
+\item
+  A compiler supporting OpenMP~\cite{openmp} (preferably version 4
+  or better).
+\end{enumerate}
+
+
+
+\subsection{Installation}\label{installation}
+
+You can install the stable version from CRAN using the usual
+\texttt{install.packages()}:
+
+\begin{lstlisting}[language=rr]
+install.packages("band")
+\end{lstlisting}
+
+The development version is maintained on GitHub. You can install this
+version using any of the well-known installer packages available to R:
+
+\begin{lstlisting}[language=rr]
+### Pick your preference
+devtools::install_github("wrathematics/band")
+ghit::install_github("wrathematics/band")
+remotes::install_github("wrathematics/band")
+\end{lstlisting}
+
+
+\section{Choice of BLAS Library}\label{choice-of-blas-library}
+
+This topic has been written about endlessly, so we will only briefly
+summarize the topic here. The \textbf{band} package heavily depends on
+``Basic Linear Algebra Subprograms'', or \textbf{BLAS}
+\cite{lawson1979basic} operations. R ships the reference
+\textbf{BLAS}~\cite{lawson1979basic} which are known to have poor
+performance. Modern re-implementations of the \textbf{BLAS} library have
+identical API and should generally produce similar outputs from the same
+input, but they are instrumented to be very high performance. These
+high-performance versions take advantage of things like vector
+instructions (``vectorization'') and multiple processor cores.
+
+Several well-supported high performance \textbf{BLAS} libraries used
+today are Intel \textbf{MKL}~\cite{mkl} and AMD \textbf{ACML}
+\cite{acml}, both of which are proprietary and can, depending on
+circumstances, require paying for a license to use. There are also good
+open source implementations, such as \textbf{OpenBLAS}
+\cite{OpenBLAS}, which is perhaps the best of the free
+options. Another free \textbf{BLAS} library which will outperform the
+reference \textbf{BLAS} is Atlas~\cite{atlas}, although there is
+generally no good reason to use \textbf{Atlas} over \textbf{OpenBLAS};
+so if possible, one should choose \textbf{OpenBLAS} over Atlas. In
+addition to merely being faster on a single core, all of the above named
+\textbf{BLAS} libraries except for Atlas is multi-threaded.
+
+If you're on Linux, you can generally use \textbf{OpenBLAS} with R
+without too much trouble. For example, on Ubuntu you can simply run:
+
+\begin{lstlisting}[language=rr]
+sudo apt-get install libopenblas-dev
+sudo update-alternatives --config libblas.so.3
+\end{lstlisting}
+
+Users on other platforms like Windows or Mac (which I know considerably
+less about) might consider using Revolution R Open, which ships with
+Intel MKL.
+
+
+\addcontentsline{toc}{section}{References}
+\bibliography{./include/band}
+\bibliographystyle{plain}
+
+\end{document}
